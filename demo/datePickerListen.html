@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+		<title>jQuery datePicker datePickerListen demo</title>
+		
+		<!-- firebug lite -->
+		<script type="text/javascript" src="firebug/firebug.js"></script>
+
+        <!-- jQuery -->
+		<script type="text/javascript" src="scripts/jquery-1.2.6.min.js"></script>
+        
+        <!-- required plugins -->
+		<script type="text/javascript" src="scripts/date.js"></script>
+		<!--[if IE]><script type="text/javascript" src="scripts/jquery.bgiframe.min.js"></script><![endif]-->
+        
+        <!-- jquery.datePicker.js -->
+		<script type="text/javascript" src="scripts/jquery.datePicker.js"></script>
+        
+        <!-- datePicker required styles -->
+		<link rel="stylesheet" type="text/css" media="screen" href="styles/datePicker.css">
+		
+        <!-- page specific styles -->
+		<link rel="stylesheet" type="text/css" media="screen" href="styles/demo.css">
+        
+        <!-- page specific scripts -->
+		<script type="text/javascript" charset="utf-8">
+            $(function()
+            {
+				$('.date-pick')
+					.datePicker({createButton:false})
+					.bind(
+						'click',
+						function()
+						{
+							$(this).dpDisplay();
+							this.blur();
+							return false;
+						}
+					)
+					.bind(
+						'dateSelected',
+						function(e, selectedDate, $td)
+						{
+							console.log('You selected ' + selectedDate);
+						}
+					);
+            });
+		</script>
+		
+	</head>
+	<body>
+        <div id="container">
+            <h1>jquery.datePicker example: datePicker with listener</h1>
+			<p><a href="index.html">&lt; date picker home</a></p>
+            <p>
+                The following example displays basic use of the datePicker command. A datePicker is created associated
+				with our link elements. When the links are clicked we call the $().dpDisplay function to make a calendar
+				pop up. When a date is selected on the calendar our custom "dateSelected" function is fired and
+				we have a function bound to listen to it and alert the selected date.
+            </p>
+			<p>
+				<strong>NOTE</strong>: You will need firebug to see the results of the demo - firebug lite is included in this page
+				so whatever browser you are in just press F12 to open up the firebug console.
+			</p>
+			<p>
+				<a href="noJs.html" class="date-pick">Click here</a> to see a date picker pop up next to
+				that link. You can also <a href="noJs.html" class="date-pick">click here</a> to see a different
+				date picker pop up.
+			</p>
+			<h2>Page sourcecode</h2>
+			<pre class="sourcecode">
+$(function()
+{
+	$('.date-pick')
+		.datePicker({createButton:false})
+		.bind(
+			'click',
+			function()
+			{
+				$(this).dpDisplay();
+				this.blur();
+				return false;
+			}
+		)
+		.bind(
+			'dateSelected',
+			function(e, selectedDate, $td)
+			{
+				console.log('You selected ' + selectedDate);
+			}
+		);
+});</pre>
+        </div>
+	</body>
+</html>

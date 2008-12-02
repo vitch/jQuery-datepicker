@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+		<title>jQuery datePicker complex inline datePicker demo</title>
+		
+		<!-- firebug lite -->
+		<script type="text/javascript" src="firebug/firebug.js"></script>
+
+        <!-- jQuery -->
+		<script type="text/javascript" src="scripts/jquery-1.2.6.min.js"></script>
+        
+        <!-- required plugins -->
+		<script type="text/javascript" src="scripts/date.js"></script>
+		<!--[if IE]><script type="text/javascript" src="scripts/jquery.bgiframe.min.js"></script><![endif]-->
+        
+        <!-- jquery.datePicker.js -->
+		<script type="text/javascript" src="scripts/jquery.datePicker.js"></script>
+        
+        <!-- datePicker required styles -->
+		<link rel="stylesheet" type="text/css" media="screen" href="styles/datePicker.css">
+		
+        <!-- page specific styles -->
+		<link rel="stylesheet" type="text/css" media="screen" href="styles/demo.css">
+        
+        <!-- page specific scripts -->
+		<script type="text/javascript" charset="utf-8">
+            $(function()
+            {
+				$('#inline-1')
+					.datePicker(
+						{
+							inline:true
+						}
+					);
+				$('#inline-2')
+					.datePicker(
+						{
+							inline:true,
+							selectMultiple:true // allow multiple dates to be selected
+						}
+					);
+				$('#inline-3')
+					.datePicker(
+						{
+							inline:true,
+							startDate:'01/01/2000', // first selectable date is 1st Jan 2000
+							month:0, // initially display Jan (months are zero based in JS)
+							year:2004 // initially display 2004
+						}
+					);
+				$('.date-pick').datePicker();
+            });
+		</script>
+		
+		<style type="text/css">
+		
+		.line-up {
+			float: left;
+			margin: 25px 4px;
+		}
+		
+		</style>
+		
+	</head>
+	<body>
+        <div id="container">
+            <h1>jquery.datePicker example: complex inline datePicker</h1>
+			<p><a href="index.html">&lt; date picker home</a></p>
+            <p>
+                The following example builds on the <a href="inlineDatePicker.html">simple inline datepicker</a> example
+				and shows how you can have different inline datepickers with different settings on the
+				same page as a popup date picker and everything works as expected.
+            </p>
+			<form name="chooseDateForm" id="chooseDateForm" action="#">
+				<fieldset style="float:left">
+					<legend>Test date picker form</legend>
+                    <ol>
+                        <li>
+                            <label for="date1">Popup date 1:</label>
+							<input name="date1" id="date1" class="date-pick" />
+						</li>
+                        <li>
+                            <label for="date2">Popup date 2:</label>
+							<input name="date2" id="date2" class="date-pick" />
+						</li>
+                        <li>
+                            <label for="test-select">Test select:</label>
+                            <select name="test-select" id="test-select" style="width: 170px">
+                                <option value="1">Test SELECT </option>
+                                <option value="2">Doesn't shine through</option>
+                                <option value="3">Even in IE</option>
+                                <option value="4">Yay!</option>
+                            </select>
+                        </li>
+					</ol>
+				</fieldset>
+			</form>
+			<div id="inline-1" class="line-up">
+				The contents of this div will be replaced by the inline datePicker.
+			</div>
+			<div id="inline-2" class="line-up">
+				The contents of this div will be replaced by the inline datePicker.
+			</div>
+			<div id="inline-3" class="line-up">
+				The contents of this div will be replaced by the inline datePicker.
+			</div>
+			<h2 style="clear: left;">Page sourcecode</h2>
+			<pre class="sourcecode">
+$(function()
+{
+	$('#inline-1')
+		.datePicker(
+			{
+				inline:true
+			}
+		);
+	$('#inline-2')
+		.datePicker(
+			{
+				inline:true,
+				selectMultiple:true // allow multiple dates to be selected
+			}
+		);
+	$('#inline-3')
+		.datePicker(
+			{
+				inline:true,
+				startDate:'01/01/2000', // first selectable date is 1st Jan 2000
+				month:0, // initially display Jan (months are zero based in JS)
+				year:2004 // initially display 2004
+			}
+		);
+	$('.date-pick').datePicker();
+});</pre>
+        </div>
+	</body>
+</html>

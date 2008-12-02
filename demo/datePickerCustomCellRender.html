@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+		<title>jQuery datePicker datePickerCustomCellRender demo</title>
+		
+		<!-- firebug lite -->
+		<script type="text/javascript" src="firebug/firebug.js"></script>
+
+        <!-- jQuery -->
+		<script type="text/javascript" src="scripts/jquery-1.2.6.min.js"></script>
+        
+        <!-- required plugins -->
+		<script type="text/javascript" src="scripts/date.js"></script>
+		<!--[if IE]><script type="text/javascript" src="scripts/jquery.bgiframe.min.js"></script><![endif]-->
+        
+        <!-- jquery.datePicker.js -->
+		<script type="text/javascript" src="scripts/jquery.datePicker.js"></script>
+        
+        <!-- datePicker required styles -->
+		<link rel="stylesheet" type="text/css" media="screen" href="styles/datePicker.css">
+		
+        <!-- page specific styles -->
+		<link rel="stylesheet" type="text/css" media="screen" href="styles/demo.css">
+        
+        <!-- page specific scripts -->
+		<script type="text/javascript" charset="utf-8">
+            $(function()
+            {
+				$('.date-pick')
+					.datePicker(
+						{
+							createButton:false,
+							renderCallback:function($td, thisDate, month, year)
+							{
+								if (thisDate.isWeekend()) {
+									$td.addClass('weekend');
+									$td.addClass('disabled');
+								}
+							}
+						}
+					)
+					.bind('click',
+						function()
+						{
+							$(this).dpDisplay();
+							this.blur();
+							return false;
+						}
+					)
+					.bind('dateSelected',
+						function(e, selectedDate, $td)
+						{
+							console.log('You selected ' + selectedDate);
+						}
+					);
+            });
+		</script>
+        <!-- page specific styles -->
+		<style type="text/css">		
+		table.jCalendar td.weekend, table.jCalendar td.weekend:hover {
+			background: #777;
+			color: #555;
+		}
+		</style>
+		
+	</head>
+	<body>
+        <div id="container">
+            <h1>jquery.datePicker example: datePicker with custom cell renderer</h1>
+			<p><a href="index.html">&lt; date picker home</a></p>
+            <p>
+                The following example displays how you can use a custom cell renderer to control the behaviour of
+				the date picker. In this case I add a class of "weekend" to the cells which fall on a weekend and
+				I also add the class "disabled". This is a special class which prevents those days from being selectable.
+            </p>
+			<p>
+				<strong>NOTE</strong>: You will need firebug to see the results of the demo - firebug lite is included in this page
+				so whatever browser you are in just press F12 to open up the firebug console.
+			</p>
+			<p>
+				<a href="noJs.html" class="date-pick">Click here</a>.
+			</p>
+			<h2>Page sourcecode</h2>
+			<pre class="sourcecode">
+$(function()
+{
+	$('.date-pick')
+		.datePicker(
+			{
+				createButton:false,
+				renderCallback:function($td, thisDate, month, year)
+				{
+					if (thisDate.isWeekend()) {
+						$td.addClass('weekend');
+						$td.addClass('disabled');
+					}
+				}
+			}
+		)
+		.bind('click',
+			function()
+			{
+				$(this).dpDisplay();
+				this.blur();
+				return false;
+			}
+		)
+		.bind('dateSelected',
+			function(e, selectedDate, $td)
+			{
+				console.log('You selected ' + selectedDate);
+			}
+		);
+});</pre>
+			<h2>Page CSS</h2>
+			<pre class="sourcecode">
+table.jCalendar td.weekend, table.jCalendar td.weekend:hover {
+	background: #777;
+	color: #555;
+}
+			</pre>
+        </div>
+	</body>
+</html>

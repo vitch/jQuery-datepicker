@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+		<title>jQuery datePicker inline datePicker demo</title>
+		
+		<!-- firebug lite -->
+		<script type="text/javascript" src="firebug/firebug.js"></script>
+
+        <!-- jQuery -->
+		<script type="text/javascript" src="scripts/jquery-1.2.6.min.js"></script>
+        
+        <!-- required plugins -->
+		<script type="text/javascript" src="scripts/date.js"></script>
+		<!--[if IE]><script type="text/javascript" src="scripts/jquery.bgiframe.min.js"></script><![endif]-->
+        
+        <!-- jquery.datePicker.js -->
+		<script type="text/javascript" src="scripts/jquery.datePicker.js"></script>
+        
+        <!-- datePicker required styles -->
+		<link rel="stylesheet" type="text/css" media="screen" href="styles/datePicker.css">
+		
+        <!-- page specific styles -->
+		<link rel="stylesheet" type="text/css" media="screen" href="styles/demo.css">
+        
+        <!-- page specific scripts -->
+		<script type="text/javascript" charset="utf-8">
+            $(function()
+            {
+				$('.turn-me-into-datepicker')
+					.datePicker({inline:true})
+					.bind(
+						'dateSelected',
+						function(e, selectedDate, $td)
+						{
+							console.log('You selected ' + selectedDate);
+						}
+					);
+            });
+		</script>
+		
+		<style type="text/css">
+		
+		.turn-me-into-datepicker {
+			float: left;
+			margin: 10px;
+		}
+		
+		</style>
+		
+	</head>
+	<body>
+        <div id="container">
+            <h1>jquery.datePicker example: inline datePicker</h1>
+			<p><a href="index.html">&lt; date picker home</a></p>
+            <p>
+                The following example shows you how you can use the date picker inline in your
+				page (rather than as a popup). An inline datepicker always appears on the page
+				and doesn't close when you select dates. You need to add a listener to the
+				<em>dateSelected</em> event if you want to capture the user's choice of dates.
+            </p>
+			<p>
+				<strong>NOTE</strong>: You will need firebug to see the results of selecting dates
+				in thie demo - firebug lite is included in this page so whatever browser you are
+				in just press F12 to open up the firebug console.
+			</p>
+			<div class="turn-me-into-datepicker">
+				The contents of this div will be replaced by the inline datePicker.
+			</div>
+			<div class="turn-me-into-datepicker">
+				The contents of this div will be replaced by the inline datePicker.
+			</div>
+			<div class="turn-me-into-datepicker">
+				The contents of this div will be replaced by the inline datePicker.
+			</div>
+			<h2 style="clear: left;">Page sourcecode</h2>
+			<pre class="sourcecode">
+$(function()
+{
+	$('.turn-me-into-datepicker')
+		.datePicker({inline:true})
+		.bind(
+			'dateSelected',
+			function(e, selectedDate, $td)
+			{
+				console.log('You selected ' + selectedDate);
+			}
+		);
+});</pre>
+        </div>
+	</body>
+</html>

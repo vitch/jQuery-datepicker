@@ -1,0 +1,163 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+		<title>jQuery datePicker home</title>
+		
+        <!-- jQuery -->
+		<script type="text/javascript" src="scripts/jquery-1.2.6.min.js"></script>
+		<script type="text/javascript" src="scripts/jquery.datePicker.js"></script>
+        
+        <!-- page specific styles -->
+		<link rel="stylesheet" type="text/css" media="screen" href="styles/demo.css">
+        
+        <!-- page specific scripts -->
+		<script type="text/javascript" charset="utf-8">
+            $(function()
+            {
+				$('#dp-version').text('[' + $.dpVersion + ']');
+            });
+		</script>
+		
+	</head>
+	<body>
+        <div id="container">
+            <h1 class="home">jQuery date picker plug-in</h1>
+			<h3>A flexible unobtrusive calendar component for jQuery</h3>
+            <p>
+                Welcome to the homepage for version 2 of the <a href="http://jquery.com">jQuery</a> datePicker plugin.
+            </p>
+			<p>
+				This is an clean, unobtrusive plugin for jQuery which allows you to easily add date inputing functionality to your web forms and pages. Designed from
+				the ground up to be flexible and extensible, the date picker can be used in unlimited ways to allow you to add calendar widgets to your pages.
+			</p>
+			<h2>Requirements</h2>
+			<ul>
+				<li><a href="scripts/jquery-1.2.6.min.js">jQuery</a>.</li>
+				<li>The <a href="http://jqueryjs.googlecode.com/svn/trunk/plugins/datePicker/v2/demo/date.js">date methods</a>.</li>
+				<li>Optionally the <a href="http://jqueryjs.googlecode.com/svn/trunk/plugins/bgiframe/jquery.bgiframe.js">bgiframe plugin</a> (if you have SELECT elements on your page and don't want them to shine through the date pickers for users of IE).</li>
+				<li>Optionally some <a href="http://jqueryjs.googlecode.com/svn/trunk/plugins/methods/">localised date methods</a> (if you want to display the date picker in a different language/ locale).</li>
+			</ul>
+			<div style="font-size: .9em; background: #eee; padding: 0 10px; margin: 1em 0; border: 1px solid #aaa;">
+				<p>
+					<strong>Note about using with older versions of jQuery</strong><br />
+					The datePicker is compatible with jQuery 1.1+. However, to use it with versions lower than 1.2.1 introduces a dependancy on the <a href="http://jquery.com/plugins/project/dimensions">dimensions plugin</a>. You will need to use a version of the dimensions plugin pre- 1.2 as in version 1.2 the offset method that we rely on was removed from the plugin (as it now exists in the core). You are always recommended to use the latest version of jQuery anyway.
+				</p>
+			</div>
+			<h2>Download</h2>
+			<p>
+				The latest version of the date picker will always be available through the googlecode project <a href="http://code.google.com/p/jquery-datepicker/downloads/list">downloads page</a>, alternatively you can download it below:
+			</p>
+			<ul>
+				<li><a href="scripts/jquery.datePicker.js">jquery.datePicker.js</a> <span id="dp-version"></span></li>
+				<li><a href="styles/datePicker.css">datePicker.css</a> (the required CSS)</li>
+			</ul>
+			<h2>Usage</h2>
+			<p>
+				Simply reference the relevant files at the head of your page like so:
+			</p>
+			<pre>
+&lt;!-- jQuery --&gt;
+&lt;script type="text/javascript" src="scripts/jquery-1.2.6.min.js"&gt;&lt;/script&gt;
+
+&lt;!-- required plugins --&gt;
+&lt;script type="text/javascript" src="scripts/date.js"&gt;&lt;/script&gt;
+&lt;!--[if IE]&gt;&lt;script type="text/javascript" src="scripts/jquery.bgiframe.js"&gt;&lt;/script&gt;&lt;![endif]--&gt;
+
+&lt;!-- jquery.datePicker.js --&gt;
+&lt;script type="text/javascript" src="scripts/jquery.datePicker.js"&gt;&lt;/script&gt;</pre>
+			<p>
+				(note that I am using IE's conditional compilation to include the bgiframe plugin as it isn't necessary
+				for other browsers so it seems pointless for them to download it)
+			</p>
+			<p>Then simply instantiate the date picker as you like - see the demos below for inspiration...</p>
+			<h2>Documentation</h2>
+			<p>
+				The inline documentation is available as a nicely formated <a href="documentation.html">html
+				documentation file</a> thanks to Jörn Zaefferer's <a href="http://jquery.bassistance.de/docTool/docTool.html">
+				jQuery HTML Documentation Generator</a>
+			</p>
+			<h2>Demos</h2>
+			<p>
+				A picture is worth a thousand words and so is a demo! So here are a bunch of demos showing
+				some of the many ways that you can use the datePicker plugin. Some of the demos are very simple
+				and just illustrate one optional parameter while some are more complicated and illustrate completely
+				different ways of using the plugin.
+			</p>
+			<dl>
+				<dt><a href="datePicker.html">simple datePicker</a></dt>
+				<dd>A simple example showing the basic use of a date picker tied to an input field.</dd>
+				<dt><a href="datePickerDefaultToday.html">simple datePicker with today selected</a></dt>
+				<dd>A simple example showing the basic use of a date picker tied to an input field with todays date selected by default.</dd>
+				<dt><a href="datePickerPastDate.html">simple datePicker with dates in the past selectable</a></dt>
+				<dd>A simple example showing the basic use of a date picker tied to an input field with dates in the past selectable.</dd>
+				<dt><a href="datePickerOnlyPastDate.html">simple datePicker with ONLY dates in the past selectable</a></dt>
+				<dd>A simple example showing the basic use of a date picker tied to an input field with only dates in the past selectable (e.g. for entering birthdate).</dd>
+				<dt><a href="inlineDatePicker.html">simple inline datePicker</a></dt>
+				<dd>An example showing an inline date picker (which is always on the page and doesn't disappear).</dd>
+				<dt><a href="datePickerPosition.html">datePicker with position</a></dt>
+				<dd>This example shows how you can control where (relative to the associated element) the date picker appears.</dd>
+				<dt><a href="datePickerClickInput.html">datePicker with a clickable input field</a></dt>
+				<dd>An very simple example showing how you can make the date picker pop up when you click on the input field (rather than the associated button).</dd>
+				<dt><a href="datePickerDateFormat.html">datePicker with a different dateFormat</a></dt>
+				<dd>A very simple example showing how you can change the date format and first day of the week displayed for the date picker.</dd>
+				<dt><a href="datePickerLocalised.html">Localised datePicker</a></dt>
+				<dd>A very simple example showing how you can localise the date picker.</dd>
+				<dt><a href="datePickerDisabled.html">disabling the datePicker</a></dt>
+				<dd>A simple example showing how you can disable a date picker.</dd>
+				<dt><a href="datePickerListen.html">datePicker with custom listener</a></dt>
+				<dd>This example shows how you can bind a date picker to any element and register a event listener which is informed whenever a date is selected.</dd>
+				<dt><a href="datePickerCustomCellRender.html">datePicker with a custom cell renderer</a></dt>
+				<dd>This demo shows how you can have a date picker with a custom cell renderer to change the appearance and behaviour (in this case I make the weekends look different and be unselectable).</dd>
+				<dt><a href="datePickerMultiple.html">datePicker with multiple select</a></dt>
+				<dd>This shows the simple script necessary to use the date picker to be able to select multiple dates.</dd>
+				<dt><a href="datePickerStartEnd.html">Start and end date pickers</a></dt>
+				<dd>This example shows how you can tie two date pickers together so that the date selected in one influences the dates that can be selected in the other.</dd>
+				<dt><a href="datePickerIntoSelects.html">datePicker linked to select elements</a></dt>
+				<dd>An example showing how you can bind a date picker to three select elements rather than to an input.</dd>
+				<dt><a href="datePickerCloseMouseOut.html">datePicker which disappears on mouse out</a></dt>
+				<dd>An example showing how you can make the date picker automatically close when the user moves their mouse out of it.</dd>
+				<dt><a href="datePickerOnFocus.html">Date picker that appears/ disappears on focus/ blur</a></dt>
+				<dd>This example shows how you can make a date picker appear when it's related element is focused and then disappear when the relevant element is blurred.</dd>
+				<dt><a href="inlineDatePickerComplex.html">complex inline datePicker</a></dt>
+				<dd>An example showing more advanced use of an inline date picker (with multiple instances on the same page with different settings).</dd>
+				<dt><a href="datePickerKarmasAgent.html">datePicker Karmas Agent example</a></dt>
+				<dd>An example as a result of a support request from "Karmas Agent" - demonstrates custom listeners, custom date ranges and hiding dates which aren't part of the current month.</dd>
+				<dt><a href="renderCalendar.html">renderCalendar</a></dt>
+				<dd>The date picker also exposes a method for rendering a month view calendar into any element.</dd>
+				<dt><a href="renderCalendarCallback.html">renderCalendar with callbacks</a></dt>
+				<dd>You can optionally use callbacks when rendering a calendar to control the look and behaviour of the rendered calendar.</dd>
+				<dt><a href="renderCalendarBankHolidays.html">renderCalendar displaying bank holidays</a></dt>
+				<dd>This example shows how you can use the renderCalendar callbacks to add extra data to the rendered calendar (in this case bank holidays are marked)</dd>
+			</dl>
+			<h2>Donate</h2>
+			<p>My jQuery date picker is completely open source and free of charge but if you find it useful and it saves you time then please consider donating to my beer fund using the button below. Thanks!</p>
+			<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----
+">
+<input type="image" src="https://www.paypal.com/en_GB/i/btn/btn_donate_SM.gif" border="0" style="width:74px;" name="submit" alt="">
+<img alt="" border="0" src="https://www.paypal.com/en_GB/i/scr/pixel.gif" width="1" height="1">
+</form>
+			<h2>Support</h2>
+			<p>Support is available through the <a href="http://code.google.com/p/jquery-datepicker/issues/list">issues list</a> on the <a href="http://code.google.com/p/jquery-datepicker/">jquery datepicker googlecode project</a> - please request help or submit any bug reports there.</p>
+			<h2>Credits</h2>
+			<p>
+				Thanks to <a href="http://ejohn.org/">John Resig</a> and the other members of the
+				<a href="http://docs.jquery.com/Contributors#Development_Team">jQuery developement team</a>
+				for an awesome library.
+			</p>
+			<p>
+				Further thanks to <a href="http://brandonaaron.net/">Brandon Aaron</a> for the
+				<a href="http://brandon.jquery.com/plugins/bgiframe/">bgiframe</a> plugin and to
+				Brandon and <a href="http://www.paulbakaus.com/">Paul Bakaus</a> for the
+				<a href="http://jquery.com/dev/svn/trunk/plugins/dimensions/dimensions.js?format=txt">dimensions</a>
+				plugin.
+			</p>
+			<p>
+				And a big thanks to <a href="http://bassistance.de">Jörn Zaefferer</a> for feedback during the planning
+				stage and code review. Also to Brandon Aaron and Paul McLanahan for their input.
+			</p>
+        </div>
+	</body>
+</html>

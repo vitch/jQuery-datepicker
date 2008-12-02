@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+		<title>jQuery datePicker datePickerPosition demo</title>
+		
+		<!-- firebug lite -->
+		<script type="text/javascript" src="firebug/firebug.js"></script>
+
+        <!-- jQuery -->
+		<script type="text/javascript" src="scripts/jquery-1.2.6.min.js"></script>
+        
+        <!-- required plugins -->
+		<script type="text/javascript" src="scripts/date.js"></script>
+		<!--[if IE]><script type="text/javascript" src="scripts/jquery.bgiframe.min.js"></script><![endif]-->
+        
+        <!-- jquery.datePicker.js -->
+		<script type="text/javascript" src="scripts/jquery.datePicker.js"></script>
+        
+        <!-- datePicker required styles -->
+		<link rel="stylesheet" type="text/css" media="screen" href="styles/datePicker.css">
+		
+        <!-- page specific styles -->
+		<link rel="stylesheet" type="text/css" media="screen" href="styles/demo.css">
+        
+        <!-- page specific scripts -->
+		<script type="text/javascript" charset="utf-8">
+            $(function()
+            {
+				$('.date-pick')
+					.datePicker({createButton:false})
+					.bind('click',
+						function()
+						{
+							$(this).dpDisplay();
+							this.blur();
+							return false;
+						}
+					);
+				// tl is the default so don't bother setting it's position
+				$('#tr').dpSetPosition($.dpConst.POS_TOP, $.dpConst.POS_RIGHT);
+				$('#bl').dpSetPosition($.dpConst.POS_BOTTOM, $.dpConst.POS_LEFT);
+				$('#br').dpSetPosition($.dpConst.POS_BOTTOM, $.dpConst.POS_RIGHT);
+				$('#custom-offset').dpSetOffset(10, 300);
+            });
+		</script>
+		
+	</head>
+	<body>
+        <div id="container">
+            <h1>jquery.datePicker example: datePicker with different positioning</h1>
+			<p><a href="index.html">&lt; date picker home</a></p>
+            <p>
+                The following example demonstrates how you can alter the position that the date picker pops up
+				relative to it's related element. Click on the following links...
+            </p>
+			<p>
+				<a href="noJs.html" class="date-pick" id="tl">#tl</a>
+				<a href="noJs.html" class="date-pick" id="tr">#tr</a>
+				<a href="noJs.html" class="date-pick" id="bl">#bl</a>
+				<a href="noJs.html" class="date-pick" id="br">#br</a>
+			</p>
+			<p>
+				You can also pass an arbitary vertical and horizontal offset which describes how far away from
+				the default position the calendar will pop up:
+			</p>
+			<p>
+				<a href="noJs.html" class="date-pick" id="custom-offset">#custom-offset</a>
+			</p>
+			<p>
+				In addition to the $().dpSetPosition and $().dpSetOffset functions you can pass the desired values
+				into the <i>verticalPosition</i>, <i>horizontalPosition</i>, <i>verticalOffset</i> and
+				<i>horizontalOffset</i> attributes of the settings object passed into $().datePicker.			
+			</p>	
+			<h2>Page sourcecode</h2>
+			<pre class="sourcecode">
+$(function()
+{
+	$('.date-pick')
+		.datePicker({createButton:false})
+		.bind('click',
+			function()
+			{
+				$(this).dpDisplay();
+				this.blur();
+				return false;
+			}
+		);
+	// tl is the default so don't bother setting it's position
+	$('#tr').dpSetPosition($.dpConst.POS_TOP, $.dpConst.POS_RIGHT);
+	$('#bl').dpSetPosition($.dpConst.POS_BOTTOM, $.dpConst.POS_LEFT);
+	$('#br').dpSetPosition($.dpConst.POS_BOTTOM, $.dpConst.POS_RIGHT);
+	$('#custom-offset').dpSetOffset(10, 300);
+});</pre>
+        </div>
+	</body>
+</html>

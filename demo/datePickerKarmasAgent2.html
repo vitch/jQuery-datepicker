@@ -1,0 +1,167 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+		<title>jQuery datePicker datePicker karmasAgent demo 2</title>
+		
+		<!-- firebug lite -->
+		<script type="text/javascript" src="firebug/firebug.js"></script>
+
+        <!-- jQuery -->
+		<script type="text/javascript" src="scripts/jquery-1.2.6.min.js"></script>
+        
+        <!-- required plugins -->
+		<script type="text/javascript" src="scripts/date.js"></script>
+		<!--[if IE]><script type="text/javascript" src="scripts/jquery.bgiframe.min.js"></script><![endif]-->
+        
+        <!-- jquery.datePicker.js -->
+		<script type="text/javascript" src="scripts/jquery.datePicker.js"></script>
+        
+        <!-- datePicker required styles -->
+		<link rel="stylesheet" type="text/css" media="screen" href="styles/datePicker.css">
+		
+        <!-- page specific styles -->
+		<link rel="stylesheet" type="text/css" media="screen" href="styles/demo.css">
+        
+        <!-- page specific scripts -->
+		<script type="text/javascript" charset="utf-8">
+            $(function()
+            {
+				$('#monthsList li').each(
+					function()
+					{
+						$this = $(this);
+						
+						var d = Date.fromString('01/' + $this.html());
+						var startDate = d.asString();
+						d.setMonth(d.getMonth() + 1);
+						d.addDays(-1);
+						var endDate = d.asString();
+						
+						$this
+							.datePicker(
+								{
+									createButton:false,
+									startDate: startDate,
+									endDate: endDate
+								}
+							)
+							.bind(
+								'click',
+								function()
+								{
+									$(this).dpDisplay();
+									this.blur();
+									return false;
+								}
+							)
+							.bind(
+								'dateSelected',
+								function(e, selectedDate, $td)
+								{
+									Date.format = 'yyyymmdd';
+									// alert the URL
+									alert('http://www.myURL.com/section/' + selectedDate.asString());
+									// reassign the date format back to how you want it.
+									Date.format = 'dd/mm/yyyy';
+								}
+							);
+					}
+				)
+            });
+		</script>
+		
+		<style type="text/css">
+			#monthsList {
+				width: 100px;
+			}
+			#monthsList li {
+				background: #eee;
+				margin: 3px 0;
+			}
+			
+			td.other-month {
+				visibility: hidden;
+			}
+		</style>
+		
+	</head>
+	<body>
+        <div id="container">
+            <h1>jquery.datePicker example: karmasAgent demo 2</h1>
+			<p><a href="index.html">&lt; date picker home</a></p>
+            <p>
+                The following example is part II (<a href="datePickerKarmasAgent.html">see part I</a>) of a series
+				and was written to answer <a href="http://jquery.com/plugins/node/625">
+				this  support request</a>.
+            </p>
+			<ul id="monthsList">
+				<li>01/2008</li>
+				<li>02/2008</li>
+				<li>03/2008</li>
+				<li>04/2008</li>
+				<li>05/2008</li>
+				<li>06/2008</li>
+				<li>07/2008</li>
+				<li>08/2008</li>
+				<li>09/2008</li>
+				<li>10/2008</li>
+				<li>11/2008</li>
+				<li>12/2008</li>
+			</ul>
+			<h2>Page sourcecode</h2>
+			<pre class="sourcecode">
+$(function()
+{
+	$('#monthsList li').each(
+		function()
+		{
+			$this = $(this);
+			
+			var d = Date.fromString('01/' + $this.html());
+			var startDate = d.asString();
+			d.setMonth(d.getMonth() + 1);
+			d.addDays(-1);
+			var endDate = d.asString();
+			
+			$this
+				.datePicker(
+					{
+						createButton:false,
+						startDate: startDate,
+						endDate: endDate
+					}
+				)
+				.bind(
+					'click',
+					function()
+					{
+						$(this).dpDisplay();
+						this.blur();
+						return false;
+					}
+				)
+				.bind(
+					'dateSelected',
+					function(e, selectedDate, $td)
+					{
+						Date.format = 'yyyymmdd';
+						// alert the URL
+						alert('http://www.myURL.com/section/' + selectedDate.asString());
+						// reassign the date format back to how you want it.
+						Date.format = 'dd/mm/yyyy';
+					}
+				);
+		}
+	)
+});</pre>
+			<h2>Page CSS</h2>
+			<pre class="sourcecode">
+/* Make it so that dates from other months don't show up */	
+td.other-month {
+	visibility: hidden;
+}
+</pre>
+        </div>
+	</body>
+</html>
