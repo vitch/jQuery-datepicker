@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-uk">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>jQuery Date Picker</title>
+<link rel="stylesheet" type="text/css" href="styles.css" title="default" media="screen" />
+
+<script type="text/javascript" src="/mint/?js"></script>
+<script type="text/javascript" src="jquery-1.1.2.js"></script>
+<script type="text/javascript" src="datePicker.js"></script>
+<!--<script type="text/javascript" src="../datePicker_source.js"></script>-->
+<script type="text/javascript">
+$(document).ready(init);
+function init()
+{
+
+	// OPTIONALLY SET THE DATE FORMAT FOR ALL DATE PICKERS ON THIS PAGE
+	//$.datePicker.setDateFormat('ymd', '-');
+	
+	// OPTIONALLY SET THE LANGUAGE DEPENDANT COPY IN THE POPUP CALENDAR
+	/*
+	$.datePicker.setLanguageStrings(
+		['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+		['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+		{p:'Anterior', n:'Siguiente', c:'Cierre', b:'Elija la fecha'}
+	);
+	*/
+	
+	// DIFFERENT OPTIONS SHOWING HOW YOU MIGHT INITIALISE THE DATE PICKER (UNCOMMENT ONE AT A TIME) //
+	
+	// all inputs with a class of "date-picker" have a date picker which lets you pick any date in the future
+	//$('input.date-picker').datePicker();
+	// OR
+	// all inputs with a class of "date-picker" have a date picker which lets you pick any date after 05/03/2006
+	//$('input.date-picker').datePicker({startDate:'05/03/2006'});
+	// OR
+	// all inputs with a class of "date-picker" have a date picker which lets you pick any date from today till 05/011/2006
+	//$('input.date-picker').datePicker({endDate:'05/11/2006'});
+	// OR
+	// all inputs with a class of "date-picker" have a date picker which lets you pick any date from 05/03/2006 till 05/11/2006
+	//$('input.date-picker').datePicker({startDate:'05/03/2006', endDate:'05/11/2006'});
+	// OR 
+	// the input with an id of "date" will have a date picker that lets you pick any day in the future...
+	$('input#date1').datePicker();
+	// ...and the input with an id of "date2" will have a date picker that lets you pick any day between the 02/11/2006 and 13/11/2006
+	$('input#date2').datePicker({startDate:'02/11/2006', endDate:'13/11/2006'});
+
+	/*
+	// testing code to check the change event is fired...
+	$('input#date1').bind(
+		'change',
+		function()
+		{
+			alert($(this).val());
+		}
+	);
+	*/
+	
+	// END DIFFERENT OPTIONS //
+}
+</script>
+
+</head>
+<body>
+	<h1>jQuery date picker plugin</h1>
+	<p>A jQuery plugin to allow you to add "date picker" elements to your forms.</p>
+	<p>The "date pickers" allow you to pick a date by clicking on a calendar and puts the chosen date into the relevant text input</p>
+	<p>No validation is performed on the text input when the form is submitted and it is presumed that the server processing the form is expecting dates in the format you specify.</p>
+	
+	<h2>Example</h2>
+	<form action="#" method="post">
+		<div class="demo-holder">
+			<label for="date1">Date 1</label>
+			<input type="text" class="date-picker" name="date1" id="date1" />
+		</div>
+		<div class="demo-holder">
+			<label for="date2">Date 2</label>
+			<input type="text" class="date-picker" name="date2" id="date2" />
+		</div>
+		<div style="float: left; margin: 2em 1em 1em;">
+			<select multiple="multiple">
+				<option>Select doesn't display through calendar even in IE!</option>
+				<option>Multiple Select doesn't display through calendar even in IE!</option>
+				<option>Multiple Select doesn't display through calendar even in IE!</option>
+				<option>Multiple Select doesn't display through calendar even in IE!</option>
+				<option>Multiple Select doesn't display through calendar even in IE!</option>
+				<option>Multiple Select doesn't display through calendar even in IE!</option>
+			</select>
+		</div>
+	</form>
+	<br style="clear: both;" />
+	
+	<h2>Usage</h2>
+	<p>Optionally set the date format (possible values are 'dmy' (european), 'mdy' (americian) or 'ymd'
+(unicode)) [defaults to 'dmy'] and seperator (any character) [defaults to '/']:</p>
+	<code>$.datePicker.setDateFormat('dmy','/'); // default - UK style</code><br />
+	<code>$.datePicker.setDateFormat('ymd','-'); // unicode</code><br />
+	<code>$.datePicker.setDateFormat('dmy','.'); // german</code>
+
+	<p>And optionally change the displayed language [default strings are in English]:</p>
+	<code>
+	<pre>
+$.datePicker.setLanguageStrings(
+	['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+	['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+	{p:'Anterior', n:'Siguiente', c:'Cierre', b:'Elija la fecha'}
+);
+	</pre></code>
+	<p>Then you are ready to initialise your date pickers. The basic syntax for this is as follows:</p>
+	<code>$('selector').datePicker();</code>
+	<p>This will add a date picker button to any input element matched by the query selector and the date picker will allow you to select any future date.</p>
+	<p>You can also optionally pass a start date (the first selectable date) or end date (the last selectable date) to the plugin like so:</p>
+	<code>$('selector').datePicker({startDate:'05/03/2006', endDate:'05/11/2006'});</code>
+	<p>You can additionally pass a value for the first day of the week on the calendars (from 0 for Sunday to 6 for Saturday)</p>
+	<code>$('selector').datePicker({firstDayOfWeek:1}); // set the calendar weeks to start from Mondays</code>
+	<p>Please view the sourcecode of this page for further examples of using the plugin. You can download this page if you like and experiment with commenting out different lines...</p>
+	<p><strong>NOTE:</strong> A user without JavaScript will simply see normal input boxes.</p>
+	
+	<h2>Requirements</h2>
+	<ul>
+		<li><a href="http://jquery.com/">jQuery</a> - obviously! I've tested against <a href="jquery-1.1.js">1.1 [rev 1073]</a>.</li>
+	</ul>
+		
+	<h2>Download</h2>
+	<ul>
+		<li><a href="datePicker.js">datePicker.js</a> &ndash; compressed JS for plugin - only 5.86KB</li>
+		<li><a href="datePicker_source.js">datePicker_source.js</a> &ndash; the readable version of the sourcecode</li>
+		<li><a href="styles.css">styles.css</a> &ndash; The necessary styles</li>
+	</ul>
+	
+	<h2>Feedback</h2>
+	<p>Feedback is greatly appreciated, either via the comments on the bottom of <a href="/projects/jquery-date-picker">this page</a> on my site, the <a href="http://jquery.com/discuss/">jQuery mailing list</a> or my <a href="/contact/">contact form</a>.</p>
+	
+	<h2>Credits</h2>
+	<ul style="padding-bottom: 30px;">
+		<li><a href="http://jquery.com">jQuery</a></li>
+		<li>Dean Edward's <a href="http://dean.edwards.name/packer/">packer</a> for compressing the code</li>
+		<li><a href="http://www.famfamfam.com/lab/icons/silk/preview.php">FamFamFam</a> for the icon</li>
+	</ul>
+</body>
+</html>

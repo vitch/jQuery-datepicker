@@ -1,0 +1,182 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-uk">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>jQuery Date Picker</title>
+<link rel="stylesheet" type="text/css" href="styles.css" title="default" media="screen" />
+
+<script type="text/javascript" src="/mint/?js"></script>
+<script type="text/javascript" src="jquery-1.1.2.js"></script>
+<script type="text/javascript" src="datePicker.js"></script>
+<!--<script type="text/javascript" src="../datePicker_source.js"></script>-->
+<script type="text/javascript">
+$(document).ready(init);
+function init()
+{
+
+	// OPTIONALLY SET THE DATE FORMAT FOR ALL DATE PICKERS ON THIS PAGE
+	//$.datePicker.setDateFormat('ymd', '-');
+	
+	// OPTIONALLY SET THE LANGUAGE DEPENDANT COPY IN THE POPUP CALENDAR
+	/*
+	$.datePicker.setLanguageStrings(
+		['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+		['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+		{p:'Anterior', n:'Siguiente', c:'Cierre', b:'Elija la fecha'}
+	);
+	*/
+	
+	// DIFFERENT OPTIONS SHOWING HOW YOU MIGHT INITIALISE THE DATE PICKER (UNCOMMENT ONE AT A TIME) //
+	
+	// all inputs with a class of "date-picker" have a date picker which lets you pick any date in the future
+	//$('input.date-picker').datePicker();
+	// OR
+	// all inputs with a class of "date-picker" have a date picker which lets you pick any date after 05/03/2006
+	//$('input.date-picker').datePicker({startDate:'05/03/2006'});
+	// OR
+	// all inputs with a class of "date-picker" have a date picker which lets you pick any date from today till 05/011/2006
+	//$('input.date-picker').datePicker({endDate:'05/11/2006'});
+	// OR
+	// all inputs with a class of "date-picker" have a date picker which lets you pick any date from 05/03/2006 till 05/11/2006
+	//$('input.date-picker').datePicker({startDate:'05/03/2006', endDate:'05/11/2006'});
+	// OR 
+	// the input with an id of "date" will have a date picker that lets you pick any day in the future...
+	$('input#date1').datePicker();
+	// ...and the input with an id of "date2" will have a date picker that lets you pick any day between the 02/11/2006 and 13/11/2006
+	$('input#date2').datePicker({startDate:'02/11/2006', endDate:'13/11/2006'});
+
+	/*
+	// testing code to check the change event is fired...
+	$('input#date1').bind(
+		'change',
+		function()
+		{
+			alert($(this).val());
+		}
+	);
+	*/
+	
+	// END DIFFERENT OPTIONS //
+}
+</script>
+
+</head>
+<body>
+	<h1>jQuery date picker plugin</h1>
+	<p>A jQuery plugin to allow you to add "date picker" elements to your forms.</p>
+	<p>The "date pickers" allow you to pick a date by clicking on a calendar and puts the chosen date into the relevant text input</p>
+	<p>No validation is performed on the text input when the form is submitted and it is presumed that the server processing the form is expecting dates in the format you specify.</p>
+	
+	<h2>Version</h2>
+	<p>r1672 - released 12th April 2007 [<a href="#changelog">changelog</a>]</p>
+	
+	<h2>Example</h2>
+	<form action="#" method="post">
+		<div class="demo-holder">
+			<label for="date1">Date 1</label>
+			<input type="text" class="date-picker" name="date1" id="date1" />
+		</div>
+		<div class="demo-holder">
+			<label for="date2">Date 2</label>
+			<input type="text" class="date-picker" name="date2" id="date2" />
+		</div>
+		<div style="float: left; margin: 2em 1em 1em;">
+			<select><option>Select doesn't display through calendar even in IE!</option></select>
+		</div>
+	</form>
+	<br style="clear: both;" />
+	
+	<h2>Usage</h2>
+	<p>Optionally set the date format (possible values are 'dmy' (european), 'mdy' (americian) or 'ymd'
+(unicode)) [defaults to 'dmy'] and seperator (any character) [defaults to '/']:</p>
+	<code>$.datePicker.setDateFormat('dmy','/'); // default - UK style</code><br />
+	<code>$.datePicker.setDateFormat('ymd','-'); // unicode</code><br />
+	<code>$.datePicker.setDateFormat('dmy','.'); // german</code>
+
+	<p>And optionally change the displayed language [default strings are in English]:</p>
+	<code>
+	<pre>
+$.datePicker.setLanguageStrings(
+	['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+	['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+	{p:'Anterior', n:'Siguiente', c:'Cierre', b:'Elija la fecha'}
+);
+	</pre></code>
+	<p>Then you are ready to initialise your date pickers. The basic syntax for this is as follows:</p>
+	<code>$('selector').datePicker();</code>
+	<p>This will add a date picker button to any input element matched by the query selector and the date picker will allow you to select any future date.</p>
+	<p>You can also optionally pass a start date (the first selectable date) or end date (the last selectable date) to the plugin like so:</p>
+	<code>$('selector').datePicker({startDate:'05/03/2006', endDate:'05/11/2006'});</code>
+	<p>You can additionally pass a value for the first day of the week on the calendars (from 0 for Sunday to 6 for Saturday)</p>
+	<code>$('selector').datePicker({firstDayOfWeek:1}); // set the calendar weeks to start from Mondays</code>
+	<p>Please view the sourcecode of this page for further examples of using the plugin. You can download this page if you like and experiment with commenting out different lines...</p>
+	<p><strong>NOTE:</strong> A user without JavaScript will simply see normal input boxes.</p>
+	
+	<h2>Requirements</h2>
+	<ul>
+		<li><a href="http://jquery.com/">jQuery</a> - obviously! I've tested against <a href="jquery-1.1.js">1.1 [rev 1073]</a>.</li>
+	</ul>
+		
+	<h2>Download</h2>
+	<ul>
+		<li><a href="datePicker.js">datePicker.js</a> &ndash; compressed JS for plugin - only 6.37KB</li>
+		<li><a href="datePicker_source.js">datePicker_source.js</a> &ndash; the readable version of the sourcecode</li>
+		<li><a href="styles.css">styles.css</a> &ndash; The necessary styles</li>
+		<li><a href="blank.html">blank.html</a> &ndash; A blank html page which the src of the "IE stop selects showing through iframe" is set to.</li>
+	</ul>
+	
+	<h2 id="changelog">Changelog</h2>
+	<ul>
+		<li>12th April 2007 - added a src to the IE iframe to avoid errors when connecting via https [r1672]</li>
+		<li>23rd March 2007 - fixed the IE7 showthrough calendar issue and updated jQuery to 1.1.2 [r1566]</li>
+		<li>14th February 2007 - fix so that the date picker works on XHTML pages served as application/xhtml+xml (thanks to Jason Karns) [r1342]</li>
+        <li>13th February 2007 - fix for issue with Firefox on Linux closing the datePicker when you clicked quickly on the previous or next buttons (thanks to Ray Lee and Ned Collyer for reporting) [r1334]</li>
+		<li>12th February 2007 - fix for issue with Safari not being able to move back beyod a January (thanks to Randy Phillips) [r1331]</li>
+		<li>2nd Febuary 2007 - fix for <a href="http://jquery.com/dev/bugs/bug/876/">bug 876</a> (thanks to Brandon for applying the fix!) [r1255]</li>
+		<li>24th January 2007 - fix to allow d/mm/y (e.g. 1/Jul/2007) format dates (thanks to Guillermo Sansovic for the patch) [r1190]</li>
+		<li>23rd January 2007 - fix so that calls to $().datePicker are chainable (thanks to <a href="http://blog.whats-your.name/">carmen</a>) [r1175]
+		<li>21st January 2007 - updated jQuery to 1.1 and made changes to allow plugin to function with it [r1141]</li>
+		<li>26th November 2006 - fix so that the weekend styling works when firstDayOfWeek != 0 (thanks to Nicko Cadell for pointing out the careless error) [r33]</li>
+		<li>25th November 2006 - change to add styles for weekend and weekday to the table [r32]</li>
+		<li>23rd November 2006 - change to allow you to click directly on the input field by passing inputClick:true when you create your datePickers (thanks to <a href="http://www.texotela.co.uk/">Sam Collett</a>) [r31]</li>
+		<li>23rd November 2006 - changes to the code to allow different seperators to specify different date formats (many thanks to Stefan Flick) NOTE - if you are setting a date format you will need to change your calling code [r30]</li>
+		<li>23rd November 2006 - removed the styles to make the calendar stay above check boxes from the stylesheet and created them in the JS (to avoid validation problems with the CSS) [r29]</li>
+		<li>19th November 2006 - added the ability to change the first day of the week on the calendar by passing in a firstDayOfWeek parameter [r28]</li>
+		<li>19th November 2006 - moved the "Choose date" string out so that it could be set via setLanguageStrings [r27]</li>
+		<li>19th November 2006 - replaced all references to $ with references to jQuery as per best practices [r26]</li>
+		<li>19th November 2006 - change to remove reliance on the DOM creation plugin (thanks to <a href="http://www.texotela.co.uk/">Sam Collett</a> for the relevant tweak). [r25]</li>
+		<li>14th November 2006 - change to make sure that the onchange event for the input is fired when a date is selected. NOTE packed version not currently available because Dean Edwards site is down... [r24]</li>
+		<li>8th October 2006 - moved some IE specific hackery for position from the JS into the CSS as it is presentational rather than behavioural and belongs there [r23]</li>
+		<li>3rd October 2006 - applied a patch from <a href="http://matt-good.net/">Matt Good</a> to make the date picker work without requiring ids on the inputs (thanks Matt!) [r22]</li>
+		<li>3rd October 2006 - updated jQuery to r384 with fixes for (amoungst other things) possible memory leaks (didn't help much) [r22]</li>
+		<li>24th September 2006 - fixed a bug when in mm/dd/yyyy date format [r21]</li>
+		<li>11th September 2006 - fixed a nasty bug (since r12) which was messing up the days of the week in certain situations [r19]</li>
+		<li>10th September 2006 - updated jQuery to r249 [r18]</li>
+		<li>10th September 2006 - fixed a memory leak in IE/PC[r17]</li>
+		<li>18th August 2006 - updated jQuery to r200</li>
+		<li>16th August 2006 - made it possible to "reinitialise" a date picker input. This allows you to change the start and end date after the date picker has been created [r16]</li>
+		<li>16th August 2006 - cleaned up the initialisation method and code thanks to suggestions from the jQuery mailing list (<strong>NOTE</strong>: if you were using a previous version of the plugin you will need to update at least your initialisation code) [r15]</li>
+		<li>16th August 2006 - stripped more unnecessary markup from the example code [r14]</li>
+		<li>15th August 2006 - added the ability to "setLastDate" [r13]</li>
+		<li>15th August 2006 - Cleaned up the markup required to use a calendar - now it is dynamically created on init (<strong>NOTE</strong>: If you were using a previous version you will need to change your markup and CSS - see the code on this page) [r11]</li>
+		<li>6th August 2006 - added the ability to change the language specific strings that appear in the calendar</li>
+		<li>25th July 2006 - added a close button to the calendar and make it display the current year in the header (<strong>NOTE</strong>: if you were using a previous version you will likely have to also modify your stylesheet to deal with the new generated HTML) [r10]</li>
+		<li>24th July 2006 - updated so SELECT elements don't show through popup calendar using CSS from <a href="http://www.hedgerwow.com/360/bugs/css-select-free.html">this fix</a> [r9]</li>
+		<li>24th July 2006 - updated to work with new release of jQuery [r8]</li>
+		<li>20th June 2006 - clicking outside the date picker closes open calendar and escape key works consistantly [r7]</li>
+		<li>4th June 2006 - added the ability to specify a "first selectable date" in the past [r4]</li>
+		<li>3rd June 2006 - inital release [r3]</li>
+	</ul>
+	<p>This plugin is stored in a <a href="http://subversion.tigris.org/">Subversion</a> repository. If you want to access old versions or do diffs of the changes between versions please use your subversion client to access the jquery subversion repository at svn://jquery.com/trunk/plugins/datePicker/</p>
+	
+	<h2>Feedback</h2>
+	<p>Feedback is greatly appreciated, either via the comments on the bottom of <a href="/projects/jquery-date-picker">this page</a> on my site, the <a href="http://jquery.com/discuss/">jQuery mailing list</a> or my <a href="/contact/">contact form</a>.</p>
+	
+	<h2>Credits</h2>
+	<ul style="padding-bottom: 30px;">
+		<li><a href="http://jquery.com">jQuery</a></li>
+		<li>Dean Edward's <a href="http://dean.edwards.name/packer/">packer</a> for compressing the code</li>
+		<li><a href="http://www.famfamfam.com/lab/icons/silk/preview.php">FamFamFam</a> for the icon</li>
+	</ul>
+</body>
+</html>

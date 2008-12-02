@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-uk">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>jQuery Date Picker</title>
+<link rel="stylesheet" type="text/css" href="styles.css" title="default" media="screen" />
+
+<script type="text/javascript" src="/mint/?js"></script>
+<script type="text/javascript" src="jquery-1.1.2.js"></script>
+<script type="text/javascript" src="datePicker.js"></script>
+<!--<script type="text/javascript" src="../datePicker_source.js"></script>-->
+<script type="text/javascript">
+$(
+    function init()
+    {
+        $('.date-picker').datePicker();
+    }
+);
+</script>
+<style type="text/css">
+div#dp-right div.popup-calendar {
+	left: -159px; /* value for IE */
+}
+html>body div#dp-right div.popup-calendar {
+	left: -60px; /* value for decent browsers */
+}
+</style>
+</head>
+<body>
+	<h1>jQuery date picker plugin</h1>
+	<p>
+        Just a simple example to show how to have <a href="index.html">date pickers</a> which open in different locations
+        - view the CSS at the top of the sourcecode for how.
+    </p>
+	
+	<h2>Example</h2>
+	<form action="#" method="post">
+		<div class="demo-holder">
+			<label for="date1">Date 1</label>
+			<input type="text" class="date-picker" name="date1" id="date1" />
+		</div>
+		<div class="demo-holder" id="dp-right">
+			<label for="date2">Date 2</label>
+			<input type="text" class="date-picker" name="date2" id="date2" />
+		</div>
+		<div style="float: left; margin: 2em 1em 1em;">
+			<select><option>Select doesn't display through calendar even in IE!</option></select>
+		</div>
+	</form>
+	<br style="clear: both;" />
+</body>
+</html>
