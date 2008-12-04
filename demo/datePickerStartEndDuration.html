@@ -1,0 +1,180 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+		<title>jQuery datePicker simple datePickerStartEnd demo with duration</title>
+		
+		<!-- firebug lite -->
+		<script type="text/javascript" src="firebug/firebug.js"></script>
+
+        <!-- jQuery -->
+		<script type="text/javascript" src="scripts/jquery-1.2.6.min.js"></script>
+        
+        <!-- required plugins -->
+		<script type="text/javascript" src="scripts/date.js"></script>
+		<!--[if IE]><script type="text/javascript" src="scripts/jquery.bgiframe.min.js"></script><![endif]-->
+        
+        <!-- jquery.datePicker.js -->
+		<script type="text/javascript" src="scripts/jquery.datePicker.js"></script>
+        
+        <!-- datePicker required styles -->
+		<link rel="stylesheet" type="text/css" media="screen" href="styles/datePicker.css">
+		
+        <!-- page specific styles -->
+		<link rel="stylesheet" type="text/css" media="screen" href="styles/demo.css">
+        
+        <!-- page specific scripts -->
+		<script type="text/javascript" charset="utf-8">
+			$(function()
+            {
+				$('.date-pick').datePicker()
+				var $startDate = $('#start-date');
+				$endDate = $('#end-date');
+				$startDate.bind(
+					'dpClosed',
+					function(e, selectedDates)
+					{
+						var d = selectedDates[0];
+						if (d) {
+							d = new Date(d);
+							$endDate.dpSetStartDate(d.addDays(1).asString());
+							var endDate = Date.fromString($endDate.val());
+							updateDuration(d, endDate);
+						}
+					}
+				);
+				$endDate.bind(
+					'dpClosed',
+					function(e, selectedDates)
+					{
+						var d = selectedDates[0];
+						if (d) {
+							d = new Date(d);
+							$startDate.dpSetEndDate(d.addDays(-1).asString());
+							var startDate = Date.fromString($startDate.val());
+							updateDuration(startDate, d);
+						}
+					}
+				);
+
+				function updateDuration(startDate, endDate)
+				{
+					if (startDate.getFullYear() > 1 && endDate.getFullYear() > 1)
+					{
+						var numDays = ((endDate.getTime() - startDate.getTime()) / 86400000) + 1;
+						$('#duration').html(numDays + ' days selected');
+					}
+				}
+            });
+		</script>
+		
+	</head>
+	<body>
+        <div id="container">
+            <h1>jquery.datePicker example: linked datePickers with start and end dates and duration display</h1>
+			<p><a href="index.html">&lt; date picker home</a></p>
+            <p>
+                The following example displays how you can synchronise two date pickers together. A common
+				scenario for an online date picker is when booking flights or something where you need to input
+				outbound and inbound dates. The start date must be before the end date and vice versa. We can enforce
+				this rule with a very simple little bit of script. It also has a field below the date pickers which allows
+				you to see the number of days selected.
+            </p>
+			<form name="chooseDateForm" id="chooseDateForm" action="#">
+				<fieldset>
+					<legend>Test date picker form</legend>
+                    <ol>
+                        <li>
+                            <label for="start-date">Start date:</label>
+							<input name="start-date" id="start-date" class="date-pick" />
+						</li>
+                        <li>
+                            <label for="end-date">End date:</label>
+							<input name="end-date" id="end-date" class="date-pick" />
+						</li>
+						<li id="duration"></li>
+                        <li>
+                            <label for="test-select">Test select:</label>
+                            <select name="test-select" id="test-select" style="width: 170px">
+                                <option value="1">Test SELECT </option>
+                                <option value="2">Doesn't shine through</option>
+                                <option value="3">Even in IE</option>
+                                <option value="4">Yay!</option>
+                            </select>
+                        </li>
+					</ol>
+				</fieldset>
+			</form>
+			<h2>Page sourcecode</h2>
+			<pre class="sourcecode">
+$(function()
+{
+	$('.date-pick').datePicker()
+	var $startDate = $('#start-date');
+	$endDate = $('#end-date');
+	$startDate.bind(
+		'dpClosed',
+		function(e, selectedDates)
+		{
+			var d = selectedDates[0];
+			if (d) {
+				d = new Date(d);
+				$endDate.dpSetStartDate(d.addDays(1).asString());
+				var endDate = Date.fromString($endDate.val());
+				updateDuration(d, endDate);
+			}
+		}
+	);
+	$endDate.bind(
+		'dpClosed',
+		function(e, selectedDates)
+		{
+			var d = selectedDates[0];
+			if (d) {
+				d = new Date(d);
+				$startDate.dpSetEndDate(d.addDays(-1).asString());
+				var startDate = Date.fromString($startDate.val());
+				updateDuration(startDate, d);
+			}
+		}
+	);
+
+	function updateDuration(startDate, endDate)
+	{
+		if (startDate.getFullYear() > 1 && endDate.getFullYear() > 1)
+		{
+			var numDays = ((endDate.getTime() - startDate.getTime()) / 86400000) + 1;
+			$('#duration').html(numDays + ' days selected');
+		}
+	}
+});</pre>
+			<h2>Page CSS</h2>
+			<pre class="sourcecode">
+/* located in demo.css and creates a little calendar icon
+ * instead of a text link for "Choose date"
+ */
+a.dp-choose-date {
+	float: left;
+	width: 16px;
+	height: 16px;
+	padding: 0;
+	margin: 5px 3px 0;
+	display: block;
+	text-indent: -2000px;
+	overflow: hidden;
+	background: url(calendar.png) no-repeat; 
+}
+a.dp-choose-date.dp-disabled {
+	background-position: 0 -20px;
+	cursor: default;
+}
+/* makes the input field shorter once the date picker code
+ * has run (to allow space for the calendar icon
+ */
+input.dp-applied {
+	width: 140px;
+	float: left;
+}</pre>
+        </div>
+	</body>
+</html>
