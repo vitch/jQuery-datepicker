@@ -389,7 +389,7 @@
 		{
 			if (v == undefined) v=true;
 			if (m == undefined) m=true;
-			return _w.call(this, 'setSelected', Date.fromString(d), v, m);
+			return _w.call(this, 'setSelected', Date.fromString(d), v, m, true);
 		},
 /**
  * Sets the month that will be displayed when the date picker is next opened. If the passed month is before startDate then the month containing startDate will be displayed instead. If the passed month is after endDate then the month containing the endDate will be displayed instead.
@@ -520,14 +520,14 @@
 	
 	// private internal function to cut down on the amount of code needed where we forward
 	// dp* methods on the jQuery object on to the relevant DatePicker controllers...
-	var _w = function(f, a1, a2, a3)
+	var _w = function(f, a1, a2, a3, a4)
 	{
 		return this.each(
 			function()
 			{
 				var c = _getController(this);
 				if (c) {
-					c[f](a1, a2, a3);
+					c[f](a1, a2, a3, a4);
 				}
 			}
 		);
@@ -650,7 +650,6 @@
 					// year and month passed in - that's the date we want!
 					t = new Date(y, m, 1)
 				}
-				
 				// check if the desired date is within the range of our defined startDate and endDate
 				if (t.getTime() < s.getTime()) {
 					t = s;
@@ -660,16 +659,42 @@
 				this.displayedMonth = t.getMonth();
 				this.displayedYear = t.getFullYear();
 			},
-			setSelected : function(d, v, moveToMonth)
+			setSelected : function(d, v, moveToMonth, dispatchEvents)
 			{
 				if (this.selectMultiple == false) {
 					this.selectedDates = {};
 					$('td.selected', this.context).removeClass('selected');
 				}
-				if (moveToMonth) {
+				if (moveToMonth && this.displayedMonth != d.getMonth()) {
 					this.setDisplayedMonth(d.getMonth(), d.getFullYear());
+					this._clearCalendar();
+					this._renderCalendar();
+					$(this.ele).trigger('dpMonthChanged', [this.displayedMonth, this.displayedYear]);
 				}
 				this.selectedDates[d.toString()] = v;
+				
+				var selectorString = 'td.';
+				selectorString += d.getMonth() == this.displayedMonth ? 'current-month' : 'other-month';
+				selectorString += ':contains("' + d.getDate() + '")';
+				var $td;
+				$(selectorString, this.ele).each(
+					function()
+					{
+						if ($(this).text() == d.getDate())
+						{
+							$td = $(this);
+							$td[v ? 'addClass' : 'removeClass']('selected');
+						}
+					}
+				);
+				
+				if (dispatchEvents)
+				{
+					var s = this.isSelected(d);
+					$e = $(this.ele);
+					$e.trigger('dateSelected', [d, $td, s]);
+					$e.trigger('change');
+				}
 			},
 			isSelected : function(d)
 			{
@@ -842,14 +867,9 @@
 					{
 						var $this = $(this);
 						if (!$this.is('.disabled')) {
-							c.setSelected(d, !$this.is('.selected') || !c.selectMultiple);
-							var s = c.isSelected(d);
-							$(c.ele).trigger('dateSelected', [d, $td, s]);
-							$(c.ele).trigger('change');
+							c.setSelected(d, !$this.is('.selected') || !c.selectMultiple, false, true);
 							if (c.closeOnSelect) {
 								c._closeCalendar();
-							} else {
-								$this[s ? 'addClass' : 'removeClass']('selected');
 							}
 						}
 					}

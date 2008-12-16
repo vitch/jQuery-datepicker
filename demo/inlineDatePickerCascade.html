@@ -1,0 +1,135 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+		<title>jQuery datePicker inline datePicker demo</title>
+		
+		<!-- firebug lite -->
+		<script type="text/javascript" src="firebug/firebug.js"></script>
+
+        <!-- jQuery -->
+		<script type="text/javascript" src="scripts/jquery-1.2.6.min.js"></script>
+        
+        <!-- required plugins -->
+		<script type="text/javascript" src="scripts/date.js"></script>
+		<!--[if IE]><script type="text/javascript" src="scripts/jquery.bgiframe.min.js"></script><![endif]-->
+        
+        <!-- jquery.datePicker.js -->
+		<script type="text/javascript" src="scripts/jquery.datePicker.js"></script>
+        
+        <!-- datePicker required styles -->
+		<link rel="stylesheet" type="text/css" media="screen" href="styles/datePicker.css">
+		
+        <!-- page specific styles -->
+		<link rel="stylesheet" type="text/css" media="screen" href="styles/demo.css">
+        
+        <!-- page specific scripts -->
+		<script type="text/javascript" charset="utf-8">
+            $(function()
+            {
+				$('#date-view1')
+					.datePicker({inline:true})
+					.bind(
+						'dateSelected',
+						function(e, selectedDate, $td)
+						{
+							$('#date1').val(selectedDate.asString());
+							$('#date-view2, #date-view3').dpSetSelected(selectedDate.addDays(3).asString());
+						}
+					);
+				$('#date-view2')
+					.datePicker({inline:true})
+					.bind(
+						'dateSelected',
+						function(e, selectedDate, $td)
+						{
+							$('#date2').val(selectedDate.asString());
+						}
+					);
+				$('#date-view3').datePicker();
+				$('#form-check')
+					.bind(
+						'click',
+						function()
+						{
+							alert('date1=' + $('#date1').val() + '\n' + 'date2=' + $('#date2').val());
+						}
+					);
+            });
+		</script>
+		
+		<style type="text/css">
+		
+		.turn-me-into-datepicker {
+			float: left;
+			margin: 10px;
+		}
+		
+		</style>
+		
+	</head>
+	<body>
+        <div id="container">
+            <h1>jquery.datePicker example: inline datePicker combined</h1>
+			<p><a href="index.html">&lt; date picker home</a></p>
+            <p>
+                The following example shows you how you can bind inline date pickers together
+				and propogate date changes from one to another. It also demonstrates updating
+				hidden input fields with the selected values from your inline date pickers.
+				You can see the values copied into the form by clicking <a href="#" id="form-check">
+				here</a>.
+			</p>
+			<form id="test-form">
+			<h3>Date 1</h3>
+				<div class="turn-me-into-datepicker" id="date-view1">
+					The contents of this div will be replaced by the inline datePicker.
+				</div>
+				<h3 style="clear: left;">Date 2</h3>
+				<p>(When you update date 1 this should be set to 3 days later)</p>
+				<div class="turn-me-into-datepicker" id="date-view2">
+					The contents of this div will be replaced by the inline datePicker.
+				</div>
+				<h3 style="clear: left;">Date 3</h3>
+				<p>(When you update date 1 this should be set to 3 days later as well - but it's not an inline calendar)</p>
+				<div class="turn-me-into-datepicker">
+					<input type="text" id="date-view3" />
+				</div>
+				<input type="hidden" id="date1" />
+				<input type="hidden" id="date2" />
+			</form>
+			<h2 style="clear: left;">Page sourcecode</h2>
+			<pre class="sourcecode">
+$(function()
+{
+	$('#date-view1')
+		.datePicker({inline:true})
+		.bind(
+			'dateSelected',
+			function(e, selectedDate, $td)
+			{
+				$('#date1').val(selectedDate.asString());
+				$('#date-view2, #date-view3').dpSetSelected(selectedDate.addDays(3).asString());
+			}
+		);
+	$('#date-view2')
+		.datePicker({inline:true})
+		.bind(
+			'dateSelected',
+			function(e, selectedDate, $td)
+			{
+				$('#date2').val(selectedDate.asString());
+			}
+		);
+	$('#date-view3').datePicker();
+	$('#form-check')
+		.bind(
+			'click',
+			function()
+			{
+				alert('date1=' + $('#date1').val() + '\n' + 'date2=' + $('#date2').val());
+			}
+		);
+});</pre>
+        </div>
+	</body>
+</html>
