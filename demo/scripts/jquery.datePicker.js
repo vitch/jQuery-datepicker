@@ -407,7 +407,7 @@
  **/
 		dpSetDisplayedMonth : function(m, y)
 		{
-			return _w.call(this, 'setDisplayedMonth', Number(m), Number(y));
+			return _w.call(this, 'setDisplayedMonth', Number(m), Number(y), true);
 		},
 /**
  * Displays the date picker associated with the matched elements. Since only one date picker can be displayed at once then the date picker associated with the last matched element will be the one that is displayed.
@@ -625,7 +625,7 @@
 					$e.attr('disabled', s ? 'disabled' : '');
 				}
 			},
-			setDisplayedMonth : function(m, y)
+			setDisplayedMonth : function(m, y, rerender)
 			{
 				if (this.startDate == undefined || this.endDate == undefined) {
 					return;
@@ -656,20 +656,29 @@
 				} else if (t.getTime() > e.getTime()) {
 					t = e;
 				}
+				var oldMonth = this.displayedMonth;
+				var oldYear = this.displayedYear;
 				this.displayedMonth = t.getMonth();
 				this.displayedYear = t.getFullYear();
+
+				if (rerender && (this.displayedMonth != oldMonth || this.displayedYear != oldYear))
+				{
+					this._rerenderCalendar();
+					$(this.ele).trigger('dpMonthChanged', [this.displayedMonth, this.displayedYear]);
+				}
 			},
 			setSelected : function(d, v, moveToMonth, dispatchEvents)
 			{
+				if (v == this.isSelected(d)) // this date is already un/selected
+				{
+					return;
+				}
 				if (this.selectMultiple == false) {
 					this.selectedDates = {};
 					$('td.selected', this.context).removeClass('selected');
 				}
 				if (moveToMonth && this.displayedMonth != d.getMonth()) {
-					this.setDisplayedMonth(d.getMonth(), d.getFullYear());
-					this._clearCalendar();
-					this._renderCalendar();
-					$(this.ele).trigger('dpMonthChanged', [this.displayedMonth, this.displayedYear]);
+					this.setDisplayedMonth(d.getMonth(), d.getFullYear(), true);
 				}
 				this.selectedDates[d.toString()] = v;
 				
@@ -891,13 +900,15 @@
 			_displayNewMonth : function(ele, m, y) 
 			{
 				if (!$(ele).is('.disabled')) {
-					this.setDisplayedMonth(this.displayedMonth + m, this.displayedYear + y);
-					this._clearCalendar();
-					this._renderCalendar();
-					$(this.ele).trigger('dpMonthChanged', [this.displayedMonth, this.displayedYear]);
+					this.setDisplayedMonth(this.displayedMonth + m, this.displayedYear + y, true);
 				}
 				ele.blur();
 				return false;
+			},
+			_rerenderCalendar : function()
+			{
+				this._clearCalendar();
+				this._renderCalendar();
 			},
 			_renderCalendar : function()
 			{

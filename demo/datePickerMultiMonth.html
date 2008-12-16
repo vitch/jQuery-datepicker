@@ -1,0 +1,169 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+		<title>jQuery datePicker custom multi month example</title>
+
+        <!-- jQuery -->
+		<script type="text/javascript" src="scripts/jquery-1.2.6.min.js"></script>
+        
+        <!-- required plugins -->
+		<script type="text/javascript" src="scripts/date.js"></script>
+		<!--[if IE]><script type="text/javascript" src="scripts/jquery.bgiframe.min.js"></script><![endif]-->
+        
+        <!-- jquery.datePicker.js -->
+		<script type="text/javascript" src="scripts/jquery.datePicker.js"></script>
+        
+        <!-- datePicker required styles -->
+		<link rel="stylesheet" type="text/css" media="screen" href="styles/datePicker.css">
+		
+        <!-- page specific styles -->
+		<link rel="stylesheet" type="text/css" media="screen" href="styles/demo.css">
+        
+        <!-- page specific scripts -->
+		<script type="text/javascript" charset="utf-8">
+            $(function()
+            {
+				// create the left hand datePicker and add the relevant event listeners to sync it to the right hand one...
+				$date1 = $('<div />')
+					.datePicker({inline:true})
+					.bind(
+						'dpMonthChanged',
+						function(event, displayedMonth, displayedYear)
+						{
+							$date2.dpSetDisplayedMonth(displayedMonth+1, displayedYear);
+						}
+					)
+					.bind(
+						'dateSelected',
+						function(event, date, $td, status)
+						{
+							$date2.dpSetSelected(date.asString(), status, false);
+						}
+					);
+				// remove the "forward" navigation from the first date picker
+				$('.dp-nav-next', $date1).html('');
+				// create the right hand datePicker and add the relevant event listeners to sync it to the left hand one...
+				$date2 = $('<div />')
+					.datePicker({inline:true})
+					.bind(
+						'dpMonthChanged',
+						function(event, displayedMonth, displayedYear)
+						{
+							$date1.dpSetDisplayedMonth(displayedMonth-1, displayedYear);
+						}
+					)
+					.bind(
+						'dateSelected',
+						function(event, date, $td, status)
+						{
+							$date1.dpSetSelected(date.asString(), status, false);
+						}
+					);
+				// remove the "backward" navigation from the first date picker
+				$('.dp-nav-prev', $date2).html('');
+				// initialise the date pickers to consecutive months ($date1 defaults to this month so set $date2 to next month)
+				var now = new Date();
+				$date2.dpSetDisplayedMonth(now.getMonth()+1, now.getFullYear());
+				// add the generated combined plugin to the document
+				$('#multimonth').html('').append($date1, $date2);
+            });
+		</script>
+
+		<style type="text/css">
+		#multimonth {
+			border: 2px solid #000;
+			overflow: auto;
+			float: left;
+		}
+		.dp-applied {
+			float: left;
+		}
+		table.jCalendar {
+			border: none;
+		}
+		.dp-popup-inline {
+			height: 160px;
+		}
+		</style>
+		
+	</head>
+	<body>
+        <div id="container">
+            <h1>jquery.datePicker multi month example: showing how you can create a custom "multi month" date picker which shows two consecutive months</h1>
+			<p><a href="index.html">&lt; date picker home</a></p>
+            <p>
+                The following example displays how you can create a "multi month" date picker which shows two consecutive months and allows you to pick one
+				date with them. It also shows how flexible the plugin is as this is achieved without modifying the plugin code at all and is instead implemented
+				in the context of the page where it is necessary (which means it can be easily customised to behave exactly as you require in a given situation).
+            </p>
+			<form name="chooseDateForm" id="chooseDateForm" action="#">
+				<div id="multimonth">This will be replaced with the multimonth select</div>
+			</form>
+			<h2 style="clear: left; padding-top: 1em;">Page sourcecode</h2>
+			<pre class="sourcecode">
+$(function()
+{
+	// create the left hand datePicker and add the relevant event listeners to sync it to the right hand one...
+	$date1 = $('&lt;div /&gt;')
+		.datePicker({inline:true})
+		.bind(
+			'dpMonthChanged',
+			function(event, displayedMonth, displayedYear)
+			{
+				$date2.dpSetDisplayedMonth(displayedMonth+1, displayedYear);
+			}
+		)
+		.bind(
+			'dateSelected',
+			function(event, date, $td, status)
+			{
+				$date2.dpSetSelected(date.asString(), status, false);
+			}
+		);
+	// remove the "forward" navigation from the first date picker
+	$('.dp-nav-next', $date1).html('');
+	// create the right hand datePicker and add the relevant event listeners to sync it to the left hand one...
+	$date2 = $('&lt;div /&gt;')
+		.datePicker({inline:true})
+		.bind(
+			'dpMonthChanged',
+			function(event, displayedMonth, displayedYear)
+			{
+				$date1.dpSetDisplayedMonth(displayedMonth-1, displayedYear);
+			}
+		)
+		.bind(
+			'dateSelected',
+			function(event, date, $td, status)
+			{
+				$date1.dpSetSelected(date.asString(), status, false);
+			}
+		);
+	// remove the "backward" navigation from the first date picker
+	$('.dp-nav-prev', $date2).html('');
+	// initialise the date pickers to consecutive months ($date1 defaults to this month so set $date2 to next month)
+	var now = new Date();
+	$date2.dpSetDisplayedMonth(now.getMonth()+1, now.getFullYear());
+	// add the generated combined plugin to the document
+	$('#multimonth').html('').append($date1, $date2);
+});</pre>
+			<h2>Page CSS</h2>
+			<pre class="sourcecode">
+#multimonth {
+	border: 2px solid #000;
+	overflow: auto;
+	float: left;
+}
+.dp-applied {
+	float: left;
+}
+table.jCalendar {
+	border: none;
+}
+.dp-popup-inline {
+	height: 160px;
+}</pre>
+        </div>
+	</body>
+</html>
