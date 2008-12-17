@@ -828,6 +828,7 @@
 			},
 			setRenderCallback : function(a)
 			{
+				if (a == null) return;
 				if (a && typeof(a) == 'function') {
 					a = [a];
 				}
