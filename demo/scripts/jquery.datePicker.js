@@ -52,18 +52,8 @@
 			{
 				return document.createElement(a);
 			};
-			
-			s = $.extend(
-				{
-					month			: null,
-					year			: null,
-					renderCallback	: null,
-					showHeader		: $.dpConst.SHOW_HEADER_SHORT,
-					dpController	: null,
-					hoverClass		: 'dp-hover'
-				}
-				, s
-			);
+
+			s = $.extend({}, $.fn.datePicker.defaults, s);
 			
 			if (s.showHeader != $.dpConst.SHOW_HEADER_NONE) {
 				var headRow = $(dc('tr'));
@@ -117,7 +107,7 @@
 				if (s.hoverClass) {
 					$(this).removeClass(s.hoverClass);
 				}
-			};
+			};	
 			
 			var w = 0;
 			while (w++<weeksToDraw) {
@@ -200,28 +190,7 @@
 			if (!$.event._dpCache) $.event._dpCache = [];
 			
 			// initialise the date picker controller with the relevant settings...
-			s = $.extend(
-				{
-					month				: undefined,
-					year				: undefined,
-					startDate			: undefined,
-					endDate				: undefined,
-					inline				: false,
-					renderCallback		: [],
-					createButton		: true,
-					showYearNavigation	: true,
-					closeOnSelect		: true,
-					displayClose		: false,
-					selectMultiple		: false,
-					clickInput			: false,
-					verticalPosition	: $.dpConst.POS_TOP,
-					horizontalPosition	: $.dpConst.POS_LEFT,
-					verticalOffset		: 0,
-					horizontalOffset	: 0,
-					hoverClass			: 'dp-hover'
-				}
-				, s
-			);
+			s = $.extend({}, $.fn.datePicker.defaults, s);
 			
 			return this.each(
 				function()
@@ -1060,6 +1029,27 @@
 	};
 	// version
 	$.dpVersion = '$Id$';
+
+	$.fn.datePicker.defaults = {
+		month				: undefined,
+		year				: undefined,
+		showHeader			: $.dpConst.SHOW_HEADER_SHORT,
+		startDate			: undefined,
+		endDate				: undefined,
+		inline				: false,
+		renderCallback		: null,
+		createButton		: true,
+		showYearNavigation	: true,
+		closeOnSelect		: true,
+		displayClose		: false,
+		selectMultiple		: false,
+		clickInput			: false,
+		verticalPosition	: $.dpConst.POS_TOP,
+		horizontalPosition	: $.dpConst.POS_LEFT,
+		verticalOffset		: 0,
+		horizontalOffset	: 0,
+		hoverClass			: 'dp-hover'
+	};
 
 	function _getController(ele)
 	{
