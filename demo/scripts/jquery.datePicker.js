@@ -242,9 +242,11 @@
 								'change',
 								function()
 								{
-									var d = Date.fromString(this.value);
-									if (d) {
-										controller.setSelected(d, true, true);
+									if (this.value != '') {
+										var d = Date.fromString(this.value);
+										if (d) {
+											controller.setSelected(d, true, true);
+										}
 									}
 								}
 							);
