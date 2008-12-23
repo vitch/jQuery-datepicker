@@ -672,7 +672,8 @@
 				{
 					var s = this.isSelected(d);
 					$e = $(this.ele);
-					$e.trigger('dateSelected', [d, $td, s]);
+					var dClone = Date.fromString(d.asString());
+					$e.trigger('dateSelected', [dClone, $td, s]);
 					$e.trigger('change');
 				}
 			},
