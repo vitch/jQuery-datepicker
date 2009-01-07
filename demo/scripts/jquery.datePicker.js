@@ -168,6 +168,7 @@
  * @option Boolean displayClose Whether to create a "Close" button within the date picker popup. Default is false.
  * @option Boolean selectMultiple Whether a user should be able to select multiple dates with this date picker. Default is false.
  * @option Boolean clickInput If the matched element is an input type="text" and this option is true then clicking on the input will cause the date picker to appear.
+ * @option Boolean rememberViewedMonth Whether the datePicker should remember the last viewed month and open on it. If false then the date picker will always open with the month for the first selected date visible.
  * @option Number verticalPosition The vertical alignment of the popped up date picker to the matched element. One of $.dpConst.POS_TOP and $.dpConst.POS_BOTTOM. Default is $.dpConst.POS_TOP.
  * @option Number horizontalPosition The horizontal alignment of the popped up date picker to the matched element. One of $.dpConst.POS_LEFT and $.dpConst.POS_RIGHT.
  * @option Number verticalOffset The number of pixels offset from the defined verticalPosition of this date picker that it should pop up in. Default in 0.
@@ -516,6 +517,7 @@
 		this.showYearNavigation	=	null;
 		this.closeOnSelect		=	null;
 		this.displayClose		=	null;
+		this.rememberViewedMonth=	null;
 		this.selectMultiple		=	null;
 		this.verticalPosition	=	null;
 		this.horizontalPosition	=	null;
@@ -539,6 +541,7 @@
 				this.showYearNavigation = s.showYearNavigation;
 				this.closeOnSelect = s.closeOnSelect;
 				this.displayClose = s.displayClose;
+				this.rememberViewedMonth =	s.rememberViewedMonth;
 				this.selectMultiple = s.selectMultiple;
 				this.verticalPosition = s.verticalPosition;
 				this.horizontalPosition = s.horizontalPosition;
@@ -745,6 +748,14 @@
 					this._closeCalendar(true);
 				}
 				
+				if (!c.rememberViewedMonth)
+				{
+					var selectedDate = this.getSelected()[0];
+					if (selectedDate) {
+						selectedDate = new Date(selectedDate);
+						this.setDisplayedMonth(selectedDate.getMonth(), selectedDate.getFullYear(), false);
+					}
+				}
 				
 				$createIn
 					.append(
@@ -1048,6 +1059,7 @@
 		displayClose		: false,
 		selectMultiple		: false,
 		clickInput			: false,
+		rememberViewedMonth	: true,
 		verticalPosition	: $.dpConst.POS_TOP,
 		horizontalPosition	: $.dpConst.POS_LEFT,
 		verticalOffset		: 0,
