@@ -651,7 +651,7 @@
 					this.selectedDates = {};
 					$('td.selected', this.context).removeClass('selected');
 				}
-				if (moveToMonth && this.displayedMonth != d.getMonth()) {
+				if (moveToMonth && (this.displayedMonth != d.getMonth() || this.displayedYear != d.getFullYear())) {
 					this.setDisplayedMonth(d.getMonth(), d.getFullYear(), true);
 				}
 				this.selectedDates[d.toString()] = v;
