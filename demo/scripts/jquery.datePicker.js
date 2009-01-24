@@ -714,6 +714,8 @@
 						'id'		:	'calendar-' + this.ele._dpId,
 						'className'	:	'dp-popup dp-popup-inline'
 					};
+
+					$('.dp-popup', $createIn).remove();
 					cssRules = {
 					};
 				} else {
