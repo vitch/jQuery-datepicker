@@ -68,6 +68,7 @@
 
 						// if the current selected date is illegal via the new rules then remove it...
 						if (Date.fromString($dateField.val()).getDay() != allowedDay) {
+							$datePicker.dpSetSelected($dateField.val(), false, false);
 							$dateField.val('');
 						}
 						
@@ -81,7 +82,8 @@
 					'submit',
 					function()
 					{
-						alert('You selected ' + $dateField.val());
+						var v = $dateField.val();
+						alert(v == '' ? 'You didn\'t select a date' : 'You selected ' + v);
 						return false;
 					}
 				);
@@ -92,6 +94,30 @@
 			table.jCalendar td.highlight
 			{
 				background: #dd0;
+			}
+			table.jCalendar td.highlight:hover
+			{
+				background: #ee0;
+			}
+			table.jCalendar td.selected,
+			table.jCalendar td.selected:hover
+			{
+				background: #f66;
+			}
+			/** 
+			 * Deal with the fact that all days are now disabled but we want to be able to visually 
+			 * differentiate between dates that are disabled because they are the wrong day of the
+			 * week and dates disabled for another reason...
+			 **/
+			table.jCalendar td.disallowed-day,
+			table.jCalendar td.disallowed-day:hover
+			{
+				background: #ccc;
+				color: #000;
+			}
+			table.jCalendar td.disallowed-day.other-month
+			{
+				background: #ddd;
 			}
 		</style>
 		
@@ -174,6 +200,7 @@ $(function()
 
 			// if the current selected date is illegal via the new rules then remove it...
 			if (Date.fromString($dateField.val()).getDay() != allowedDay) {
+				$datePicker.dpSetSelected($dateField.val(), false, false);
 				$dateField.val('');
 			}
 			
@@ -187,37 +214,40 @@ $(function()
 		'submit',
 		function()
 		{
-			alert('You selected ' + $dateField.val());
+			var v = $dateField.val();
+			alert(v == '' ? 'You didn\'t select a date' : 'You selected ' + v);
 			return false;
 		}
 	);
 });</pre>
-			<h2>Page CSS</h2>
-			<pre class="sourcecode">
-/* located in demo.css and creates a little calendar icon
- * instead of a text link for "Choose date"
- */
-a.dp-choose-date {
-	float: left;
-	width: 16px;
-	height: 16px;
-	padding: 0;
-	margin: 5px 3px 0;
-	display: block;
-	text-indent: -2000px;
-	overflow: hidden;
-	background: url(calendar.png) no-repeat; 
+			<h2>Page extra CSS</h2>
+			<pre class="sourcecode">table.jCalendar td.highlight
+			{
+	background: #dd0;
 }
-a.dp-choose-date.dp-disabled {
-	background-position: 0 -20px;
-	cursor: default;
+table.jCalendar td.highlight:hover
+{
+	background: #ee0;
 }
-/* makes the input field shorter once the date picker code
- * has run (to allow space for the calendar icon
- */
-input.dp-applied {
-	width: 140px;
-	float: left;
+table.jCalendar td.selected,
+table.jCalendar td.selected:hover
+{
+	background: #f66;
+}
+/** 
+ * Deal with the fact that all days are now disabled but we want to be able to visually 
+ * differentiate between dates that are disabled because they are the wrong day of the
+ * week and dates disabled for another reason...
+ **/
+table.jCalendar td.disallowed-day,
+table.jCalendar td.disallowed-day:hover
+{
+	background: #ccc;
+	color: #000;
+}
+table.jCalendar td.disallowed-day.other-month
+{
+	background: #ddd;
 }</pre>
         </div>
 	</body>
