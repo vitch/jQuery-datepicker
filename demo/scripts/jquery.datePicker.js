@@ -120,6 +120,7 @@
 													(currentDate.isWeekend() ? 'weekend ' : 'weekday ') +
 													(thisMonth && currentDate.getTime() == today.getTime() ? 'today ' : '')
 								)
+								.data('datePickerDate', currentDate.asString())
 								.hover(doHover, unHover)
 							;
 					if (s.renderCallback) {
@@ -874,12 +875,20 @@
 					$td.addClass('selected');
 				}
 				
-				// call any extra renderCallbacks that were passed in
-				for (var i=0; i<c.renderCallback.length; i++) {
-					c.renderCallback[i].apply(this, arguments);
-				}
-				
-				
+			},
+			_applyRenderCallbacks : function()
+			{
+				var c = this;
+				$('td', this.ele).each(
+					function()
+					{
+						for (var i=0; i<c.renderCallback.length; i++) {
+							$td = $(this);
+							c.renderCallback[i].apply(this, [$td, Date.fromString($td.data('datePickerDate')), c.displayedMonth, c.displayedYear]);
+						}
+					}
+				);
+				return;
 			},
 			// ele is the clicked button - only proceed if it doesn't have the class disabled...
 			// m and y are -1, 0 or 1 depending which direction we want to go in...
@@ -1000,6 +1009,7 @@
 						}
 					}
 				}
+				this._applyRenderCallbacks();
 			},
 			_closeCalendar : function(programatic, ele)
 			{
