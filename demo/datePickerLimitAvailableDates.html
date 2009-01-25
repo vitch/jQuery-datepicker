@@ -32,6 +32,7 @@
 				$dateField = $('#selectedDate');
 				
 				var allowedDay;
+				var numNights;
 
 				$datePicker.datePicker(
 					{
@@ -45,8 +46,34 @@
 								// by this rule vs cells which are disabled because e.g. they fall outside the startDate - endDate range.
 								$td.addClass('disabled disallowed-day');
 							} else if (!alreadyDisabled) {	// only add the highlight class if the date wasn't already for some 
-																// reason disabled (e.g. it is outside the startDate - endDate range)
+															// reason disabled (e.g. it is outside the startDate - endDate range)
 								$td.addClass('highlight');
+								
+								// we also want to highlight the other related days when you roll over the relevant date
+								var $allTDs = $('td', $td.parent().parent());
+								var td = $td[0];
+
+								for (var i=0; i<$allTDs.length; i++) {
+									if ($allTDs[i] == td) {
+										break;
+									}
+								}
+								var includedNightCells = [];
+								for (var j=i; j<i+numNights; j++) {
+									includedNightCells.push($allTDs[j]);
+								}
+								var $includedNightCells = $(includedNightCells)	;
+
+								$td.hover(
+									function()
+									{
+										$includedNightCells.addClass('included-night');
+									},
+									function()
+									{
+										$allTDs.removeClass('included-night');
+									}
+								);
 							}
 						}
 					}
@@ -63,8 +90,8 @@
 					function()
 					{
 						var rules = $durationRules.val().split(',');
-						var numNights = rules[0];
-						allowedDay = rules[1];
+						numNights = parseInt(rules[0]);
+						allowedDay = parseInt(rules[1]);
 
 						// if the current selected date is illegal via the new rules then remove it...
 						if (Date.fromString($dateField.val()).getDay() != allowedDay) {
@@ -91,18 +118,34 @@
 		</script>
 
 		<style type="text/css">
-			table.jCalendar td.highlight
+			table.jCalendar td
 			{
-				background: #dd0;
+				border: 1px solid;
+				padding: 3px 4px;
 			}
-			table.jCalendar td.highlight:hover
+			table.jCalendar td.disabled
+			{
+				border: 1px solid #bbb;
+			}
+			table.jCalendar td.highlight,
+			table.jCalendar td.other-month.highlight
+			{
+				background: #dd6;
+				color: #000;
+				border: 1px solid #dd6;
+			}
+			table.jCalendar td.highlight.dp-hover
 			{
 				background: #ee0;
+				border: 1px solid #000;
 			}
 			table.jCalendar td.selected,
-			table.jCalendar td.selected:hover
+			table.jCalendar td.selected.other-month,
+			table.jCalendar td.selected.dp-hover
 			{
-				background: #f66;
+				background: #ff0;
+				color: #000;
+				border: 1px solid #000;
 			}
 			/** 
 			 * Deal with the fact that all days are now disabled but we want to be able to visually 
@@ -110,14 +153,22 @@
 			 * week and dates disabled for another reason...
 			 **/
 			table.jCalendar td.disallowed-day,
-			table.jCalendar td.disallowed-day:hover
+			table.jCalendar td.disallowed-day.dp-hover
 			{
 				background: #ccc;
+				border: 1px solid #ccc;
 				color: #000;
 			}
 			table.jCalendar td.disallowed-day.other-month
 			{
 				background: #ddd;
+				border: 1px solid #ddd;
+			}
+			table.jCalendar td.included-night,
+			table.jCalendar td.other-month.included-night
+			{
+				border: 1px solid #ee0; 
+				background: #ee0;
 			}
 		</style>
 		
@@ -130,6 +181,10 @@
                 The following example demonstrates how you can limit the available dates for clicking on the calendar based
 				on the values in a dropdown.
             </p>
+			<p>
+				It also demonstrates how you can add behaviour to the date picker so that when a date is rolled over the following
+				X days are also highlighted.
+			</p>
 			<form name="chooseDateForm" id="chooseDateForm" action="#">
 				<div class="step">
 					<h2>Step 1: Choose Duration of stay</h2>
@@ -164,6 +219,7 @@ $(function()
 	$dateField = $('#selectedDate');
 	
 	var allowedDay;
+	var numNights;
 
 	$datePicker.datePicker(
 		{
@@ -177,8 +233,34 @@ $(function()
 					// by this rule vs cells which are disabled because e.g. they fall outside the startDate - endDate range.
 					$td.addClass('disabled disallowed-day');
 				} else if (!alreadyDisabled) {	// only add the highlight class if the date wasn't already for some 
-													// reason disabled (e.g. it is outside the startDate - endDate range)
+												// reason disabled (e.g. it is outside the startDate - endDate range)
 					$td.addClass('highlight');
+					
+					// we also want to highlight the other related days when you roll over the relevant date
+					var $allTDs = $('td', $td.parent().parent());
+					var td = $td[0];
+
+					for (var i=0; i<$allTDs.length; i++) {
+						if ($allTDs[i] == td) {
+							break;
+						}
+					}
+					var includedNightCells = [];
+					for (var j=i; j<i+numNights; j++) {
+						includedNightCells.push($allTDs[j]);
+					}
+					var $includedNightCells = $(includedNightCells)	;
+
+					$td.hover(
+						function()
+						{
+							$includedNightCells.addClass('included-night');
+						},
+						function()
+						{
+							$allTDs.removeClass('included-night');
+						}
+					);
 				}
 			}
 		}
@@ -195,8 +277,8 @@ $(function()
 		function()
 		{
 			var rules = $durationRules.val().split(',');
-			var numNights = rules[0];
-			allowedDay = rules[1];
+			numNights = parseInt(rules[0]);
+			allowedDay = parseInt(rules[1]);
 
 			// if the current selected date is illegal via the new rules then remove it...
 			if (Date.fromString($dateField.val()).getDay() != allowedDay) {
@@ -221,18 +303,34 @@ $(function()
 	);
 });</pre>
 			<h2>Page extra CSS</h2>
-			<pre class="sourcecode">table.jCalendar td.highlight
-			{
-	background: #dd0;
+			<pre class="sourcecode">table.jCalendar td
+{
+	border: 1px solid;
+	padding: 3px 4px;
 }
-table.jCalendar td.highlight:hover
+table.jCalendar td.disabled
+{
+	border: 1px solid #bbb;
+}
+table.jCalendar td.highlight,
+table.jCalendar td.other-month.highlight
+{
+	background: #dd6;
+	color: #000;
+	border: 1px solid #dd6;
+}
+table.jCalendar td.highlight.dp-hover
 {
 	background: #ee0;
+	border: 1px solid #000;
 }
 table.jCalendar td.selected,
-table.jCalendar td.selected:hover
+table.jCalendar td.selected.other-month,
+table.jCalendar td.selected.dp-hover
 {
-	background: #f66;
+	background: #ff0;
+	color: #000;
+	border: 1px solid #000;
 }
 /** 
  * Deal with the fact that all days are now disabled but we want to be able to visually 
@@ -240,14 +338,22 @@ table.jCalendar td.selected:hover
  * week and dates disabled for another reason...
  **/
 table.jCalendar td.disallowed-day,
-table.jCalendar td.disallowed-day:hover
+table.jCalendar td.disallowed-day.dp-hover
 {
 	background: #ccc;
+	border: 1px solid #ccc;
 	color: #000;
 }
 table.jCalendar td.disallowed-day.other-month
 {
 	background: #ddd;
+	border: 1px solid #ddd;
+}
+table.jCalendar td.included-night,
+table.jCalendar td.other-month.included-night
+{
+	border: 1px solid #ee0; 
+	background: #ee0;
 }</pre>
         </div>
 	</body>
