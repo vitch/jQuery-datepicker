@@ -96,22 +96,33 @@
 			var weeksToDraw = Math.ceil(( (-1*firstDayOffset+1) + currentDate.getDaysInMonth() ) /7);
 			currentDate.addDays(firstDayOffset-1);
 			
-			var doHover = function()
+			var doHover = function(firstDayInBounds)
 			{
-				if (s.hoverClass) {
-					$(this).addClass(s.hoverClass);
+				return function()
+				{
+					if (s.hoverClass) {
+						var $this = $(this);
+						if (!s.selectWeek) {
+							$this.addClass(s.hoverClass);
+						} else if (firstDayInBounds && !$this.is('.disabled')) {
+							$this.parent().addClass('activeWeekHover');
+						}
+					}
 				}
 			};
 			var unHover = function()
 			{
 				if (s.hoverClass) {
-					$(this).removeClass(s.hoverClass);
+					var $this = $(this);
+					$this.removeClass(s.hoverClass);
+					$this.parent().removeClass('activeWeekHover');
 				}
 			};	
 			
 			var w = 0;
 			while (w++<weeksToDraw) {
 				var r = jQuery(dc('tr'));
+				var firstDayInBounds = s.dpController ? currentDate > s.dpController.startDate : false;
 				for (var i=0; i<7; i++) {
 					var thisMonth = currentDate.getMonth() == month;
 					var d = $(dc('td'))
@@ -121,12 +132,12 @@
 													(thisMonth && currentDate.getTime() == today.getTime() ? 'today ' : '')
 								)
 								.data('datePickerDate', currentDate.asString())
-								.hover(doHover, unHover)
+								.hover(doHover(firstDayInBounds), unHover)
 							;
+					r.append(d);
 					if (s.renderCallback) {
 						s.renderCallback(d, currentDate, month, year);
 					}
-					r.append(d);
 					currentDate.addDays(1);
 				}
 				tbody.append(r);
@@ -170,6 +181,7 @@
  * @option Boolean selectMultiple Whether a user should be able to select multiple dates with this date picker. Default is false.
  * @option Boolean clickInput If the matched element is an input type="text" and this option is true then clicking on the input will cause the date picker to appear.
  * @option Boolean rememberViewedMonth Whether the datePicker should remember the last viewed month and open on it. If false then the date picker will always open with the month for the first selected date visible.
+ * @option Boolean selectWeek Whether to select a complete week at a time...
  * @option Number verticalPosition The vertical alignment of the popped up date picker to the matched element. One of $.dpConst.POS_TOP and $.dpConst.POS_BOTTOM. Default is $.dpConst.POS_TOP.
  * @option Number horizontalPosition The horizontal alignment of the popped up date picker to the matched element. One of $.dpConst.POS_LEFT and $.dpConst.POS_RIGHT.
  * @option Number verticalOffset The number of pixels offset from the defined verticalPosition of this date picker that it should pop up in. Default in 0.
@@ -529,6 +541,7 @@
 		this.selectedDates		=	{};
 		this.inline				=	null;
 		this.context			=	'#dp-popup';
+		this.settings			=	{};
 	};
 	$.extend(
 		DatePicker.prototype,
@@ -549,6 +562,7 @@
 				this.hoverClass = s.hoverClass;
 				this.setOffset(s.verticalOffset, s.horizontalOffset);
 				this.inline = s.inline;
+				this.settings = s;
 				if (this.inline) {
 					this.context = this.ele;
 					this.display();
@@ -644,30 +658,39 @@
 			},
 			setSelected : function(d, v, moveToMonth, dispatchEvents)
 			{
+				var s = this.settings;
+				if (s.selectWeek)
+				{
+					d = d.addDays(- (d.getDay() - Date.firstDayOfWeek + 7) % 7);
+					if (d < this.startDate) // The first day of this week is before the start date so is unselectable...
+					{
+						return;
+					}
+				}
 				if (v == this.isSelected(d)) // this date is already un/selected
 				{
 					return;
 				}
 				if (this.selectMultiple == false) {
 					this.selectedDates = {};
-					$('td.selected', this.context).removeClass('selected');
+					$('td.selected', this.context).removeClass('selected').parent().removeClass('selectedWeek');
 				}
 				if (moveToMonth && (this.displayedMonth != d.getMonth() || this.displayedYear != d.getFullYear())) {
 					this.setDisplayedMonth(d.getMonth(), d.getFullYear(), true);
 				}
 				this.selectedDates[d.toString()] = v;
-				
-				var selectorString = 'td.';
-				selectorString += d.getMonth() == this.displayedMonth ? 'current-month' : 'other-month';
-				selectorString += ':contains("' + d.getDate() + '")';
+				var selectorString = 'td.' +( d.getMonth() == this.displayedMonth ? 'current-month' : 'other-month');
 				var $td;
-				$(selectorString, this.ele).each(
+				$(selectorString, this.context).each(
 					function()
 					{
-						if ($(this).text() == d.getDate())
-						{
+						if ($(this).data('datePickerDate') == d.asString()) {
 							$td = $(this);
-							$td[v ? 'addClass' : 'removeClass']('selected');
+							if (s.selectWeek)
+							{
+								$td.parent()[v ? 'addClass' : 'removeClass']('selectedWeek');
+							}
+							$td[v ? 'addClass' : 'removeClass']('selected'); 
 						}
 					}
 				);
@@ -873,6 +896,10 @@
 				
 				if (c.isSelected(d)) {
 					$td.addClass('selected');
+					if (c.settings.selectWeek)
+					{
+						$td.parent().addClass('selectedWeek');
+					}
 				}
 				
 			},
@@ -912,13 +939,16 @@
 				
 				// render the calendar...
 				$('.dp-calendar', this.context).renderCalendar(
-					{
-						month			: this.displayedMonth,
-						year			: this.displayedYear,
-						renderCallback	: this.cellRender,
-						dpController	: this,
-						hoverClass		: this.hoverClass
-					}
+					$.extend(
+						{},
+						this.settings, 
+						{
+							month			: this.displayedMonth,
+							year			: this.displayedYear,
+							renderCallback	: this.cellRender,
+							dpController	: this,
+							hoverClass		: this.hoverClass
+						})
 				);
 				
 				// update the status of the control buttons and disable dates before startDate or after endDate...
@@ -1072,6 +1102,7 @@
 		selectMultiple		: false,
 		clickInput			: false,
 		rememberViewedMonth	: true,
+		selectWeek			: false,
 		verticalPosition	: $.dpConst.POS_TOP,
 		horizontalPosition	: $.dpConst.POS_LEFT,
 		verticalOffset		: 0,

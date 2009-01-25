@@ -12,6 +12,7 @@ table.jCalendar th {
 	font-weight: bold;
 	padding: 3px 5px;
 }
+
 table.jCalendar td {
 	background: #ccc;
 	color: #000;
@@ -30,15 +31,20 @@ table.jCalendar td.selected {
 	background: #f66;
 	color: #fff;
 }
-table.jCalendar td.selected:hover {
+table.jCalendar td.selected.dp-hover {
 	background: #f33;
 	color: #fff;
 }
-table.jCalendar td:hover, table.jCalendar td.dp-hover {
+table.jCalendar td.dp-hover,
+table.jCalendar tr.activeWeekHover td {
 	background: #fff;
 	color: #000;
 }
-table.jCalendar td.disabled, table.jCalendar td.disabled:hover {
+table.jCalendar tr.selectedWeek td {
+	background: #f66;
+	color: #fff;
+}
+table.jCalendar td.disabled, table.jCalendar td.disabled.dp-hover {
 	background: #bbb;
 	color: #888;
 }
