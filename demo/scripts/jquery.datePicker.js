@@ -935,7 +935,7 @@
 			_renderCalendar : function()
 			{
 				// set the title...
-				$('h2', this.context).html(Date.monthNames[this.displayedMonth] + ' ' + this.displayedYear);
+				$('h2', this.context).html((new Date(this.displayedYear, this.displayedMonth, 1)).asString($.dpText.HEADER_FORMAT));
 				
 				// render the calendar...
 				$('.dp-calendar', this.context).renderCalendar(
@@ -1082,7 +1082,8 @@
 		TEXT_NEXT_YEAR		:	'Next year',
 		TEXT_NEXT_MONTH		:	'Next month',
 		TEXT_CLOSE			:	'Close',
-		TEXT_CHOOSE_DATE	:	'Choose date'
+		TEXT_CHOOSE_DATE	:	'Choose date',
+		HEADER_FORMAT		:	'mmmm yyyy'
 	};
 	// version
 	$.dpVersion = '$Id$';
