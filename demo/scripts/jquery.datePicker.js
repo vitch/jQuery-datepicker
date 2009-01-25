@@ -906,7 +906,7 @@
 			_applyRenderCallbacks : function()
 			{
 				var c = this;
-				$('td', this.ele).each(
+				$('td', this.context).each(
 					function()
 					{
 						for (var i=0; i<c.renderCallback.length; i++) {

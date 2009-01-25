@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
-		<title>jQuery datePicker demo: limit available dates</title>
+		<title>jQuery datePicker demo: limit available dates (inline edition)</title>
 		
 		<!-- firebug lite -->
 		<script type="text/javascript" src="firebug/firebug.js"></script>
@@ -29,12 +29,14 @@
             {
 				$durationRules = $('#durationRules');
 				$datePicker = $('#datePicker');
+				$dateField = $('#selectedDate');
 				
 				var allowedDay;
 				var numNights;
 
 				$datePicker.datePicker(
 					{
+						inline: true,
 						renderCallback:function ($td, thisDate, month, year)
 						{
 							var alreadyDisabled = $td.is('.disabled');
@@ -75,6 +77,12 @@
 							}
 						}
 					}
+				).bind(
+					'dateSelected',
+					function(event, date, $td, status) 
+					{
+						$dateField.val(date.asString());
+					}
 				);
 
 				$durationRules.bind(
@@ -86,10 +94,13 @@
 						allowedDay = parseInt(rules[1]);
 
 						// if the current selected date is illegal via the new rules then remove it...
-						if (Date.fromString($datePicker.val()).getDay() != allowedDay) {
-							$datePicker.val('');
+						if (Date.fromString($dateField.val()).getDay() != allowedDay) {
+							$datePicker.dpSetSelected($dateField.val(), false, false);
+							$dateField.val('');
 						}
-
+						
+						// force the date picker to redraw...
+						$datePicker.dpDisplay();
 					}
 				).trigger('change');
 				
@@ -98,7 +109,7 @@
 					'submit',
 					function()
 					{
-						var v = $datePicker.val();
+						var v = $dateField.val();
 						alert(v == '' ? 'You didn\'t select a date' : 'You selected ' + v);
 						return false;
 					}
@@ -159,17 +170,12 @@
 				border: 1px solid #ee0; 
 				background: #ee0;
 			}
-
-			div.step
-			{
-				overflow: hidden;
-			}
 		</style>
 		
 	</head>
 	<body>
         <div id="container">
-            <h1>jQuery datePicker demo: limit available dates</h1>
+            <h1>jQuery datePicker demo: limit available dates (inline edition)</h1>
 			<p><a href="index.html">&lt; date picker home</a></p>
             <p>
                 The following example demonstrates how you can limit the available dates for clicking on the calendar based
@@ -198,23 +204,26 @@
 				</div>
 				<div class="step">
 					<h2>Step 2: Choose a holiday start date</h2>
-					<input type="text" id="datePicker" name="datePicker" />
+					<input type="hidden" id="selectedDate" name="selectedDate" />
+					<div id="datePicker">You need javascript enabled to see this date picker</div>
 				</div>
-				<div class="step">
-					<input type="submit" value="Submit" />
-				</div>
+
+				<input type="submit" value="Submit" />
 			</form>
 			<h2>Page sourcecode</h2>
-			<pre class="sourcecode">$(function()
+			<pre class="sourcecode">
+$(function()
 {
 	$durationRules = $('#durationRules');
 	$datePicker = $('#datePicker');
+	$dateField = $('#selectedDate');
 	
 	var allowedDay;
 	var numNights;
 
 	$datePicker.datePicker(
 		{
+			inline: true,
 			renderCallback:function ($td, thisDate, month, year)
 			{
 				var alreadyDisabled = $td.is('.disabled');
@@ -237,7 +246,7 @@
 						}
 					}
 					var includedNightCells = [];
-					for (var j=i; j < i+numNights; j++) {
+					for (var j=i; j < i +numNights; j++) {
 						includedNightCells.push($allTDs[j]);
 					}
 					var $includedNightCells = $(includedNightCells)	;
@@ -255,6 +264,12 @@
 				}
 			}
 		}
+	).bind(
+		'dateSelected',
+		function(event, date, $td, status) 
+		{
+			$dateField.val(date.asString());
+		}
 	);
 
 	$durationRules.bind(
@@ -266,10 +281,13 @@
 			allowedDay = parseInt(rules[1]);
 
 			// if the current selected date is illegal via the new rules then remove it...
-			if (Date.fromString($datePicker.val()).getDay() != allowedDay) {
-				$datePicker.val('');
+			if (Date.fromString($dateField.val()).getDay() != allowedDay) {
+				$datePicker.dpSetSelected($dateField.val(), false, false);
+				$dateField.val('');
 			}
-
+			
+			// force the date picker to redraw...
+			$datePicker.dpDisplay();
 		}
 	).trigger('change');
 	
@@ -278,7 +296,7 @@
 		'submit',
 		function()
 		{
-			var v = $datePicker.val();
+			var v = $dateField.val();
 			alert(v == '' ? 'You didn\'t select a date' : 'You selected ' + v);
 			return false;
 		}
@@ -336,11 +354,6 @@ table.jCalendar td.other-month.included-night
 {
 	border: 1px solid #ee0; 
 	background: #ee0;
-}
-
-div.step
-{
-	overflow: hidden;
 }</pre>
         </div>
 	</body>
