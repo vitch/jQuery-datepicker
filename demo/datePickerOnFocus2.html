@@ -31,8 +31,11 @@
 					.datePicker({createButton:false})
 					.bind(
 						'focus',
-						function()
+						function(event, message)
 						{
+							if (message == $.dpConst.DP_INTERNAL_FOCUS) {
+								return;
+							}
 							var $dp = $(this);
 							$dp.dpDisplay();
 							$('*').bind(
@@ -42,6 +45,7 @@
 									var $focused = $(this);
 									if (!$focused.is('.dp-applied')) // don't close the focused date picker if we just opened a new one!
 									{
+										// if the newly focused element isn't inside the date picker then close it...
 										if ($focused.parents('#dp-popup').length == 0 && this != $dp[0]) {
 											$('*').unbind('focus.datePicker');
 											$dp.dpClose();
@@ -75,7 +79,8 @@
             </p>
 			<p>
 				This is better than <a href="datePickerOnFocus.html">part 1</a> because it now works in Firefox,
-				Opera and slightly in IE. It still hates Safari though :(
+				Opera and even slightly in IE. Sometimes it works fine in Safari but sometimes it seems to lock it
+				up and confuse it.
 			</p>
 			<form name="chooseDateForm" id="chooseDateForm" action="#">
 				<fieldset>

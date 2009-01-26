@@ -893,6 +893,7 @@
 							if (c.closeOnSelect) {
 								c._closeCalendar();
 							}
+							$(c.ele).trigger('focus', [$.dpConst.DP_INTERNAL_FOCUS]);
 						}
 					}
 				);
@@ -1076,7 +1077,8 @@
 		POS_TOP				:	0,
 		POS_BOTTOM			:	1,
 		POS_LEFT			:	0,
-		POS_RIGHT			:	1
+		POS_RIGHT			:	1,
+		DP_INTERNAL_FOCUS	:	'dpInternalFocusTrigger'
 	};
 	// localisable text
 	$.dpText = {
