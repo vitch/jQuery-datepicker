@@ -865,7 +865,7 @@
 						$pop.css('left', eleOffset.left + $ele.width() - $pop.width() + c.horizontalOffset);
 					}
 //					$('.selectee', this.context).focus();
-					$(document).bind('mousedown', this._checkMouse);
+					$(document).bind('mousedown.datepicker', this._checkMouse);
 				}
 				
 			},
@@ -893,7 +893,12 @@
 							if (c.closeOnSelect) {
 								c._closeCalendar();
 							}
-							$(c.ele).trigger('focus', [$.dpConst.DP_INTERNAL_FOCUS]);
+							// TODO: Instead of this which doesn't work in IE anyway we should find the next focusable element in the document
+							// and pass the focus onto that. That would allow the user to continue on the form as expected...
+							if (!$.browser.msie)
+							{
+								$(c.ele).trigger('focus', [$.dpConst.DP_INTERNAL_FOCUS]);
+							}
 						}
 					}
 				);
@@ -1049,7 +1054,7 @@
 			{
 				if (!ele || ele == this.ele)
 				{
-					$(document).unbind('mousedown', this._checkMouse);
+					$(document).unbind('mousedown.datepicker');
 					this._clearCalendar();
 					$('#dp-popup a').unbind();
 					$('#dp-popup').empty().remove();

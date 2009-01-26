@@ -34,8 +34,9 @@
 						function(event, message)
 						{
 							if (message == $.dpConst.DP_INTERNAL_FOCUS) {
-								return;
+								return true;
 							}
+							var dp = this;
 							var $dp = $(this);
 							$dp.dpDisplay();
 							$('*').bind(
@@ -45,12 +46,12 @@
 									var $focused = $(this);
 									if (!$focused.is('.dp-applied')) // don't close the focused date picker if we just opened a new one!
 									{
-										// if the newly focused element isn't inside the date picker then close it...
-										if ($focused.parents('#dp-popup').length == 0 && this != $dp[0]) {
+										// if the newly focused element isn't inside the date picker and isn't the original element which triggered
+										// the opening of the date picker
+
+										if ($focused.parents('#dp-popup').length == 0 && this != dp && !($.browser.msie && this == document.body)) {
 											$('*').unbind('focus.datePicker');
 											$dp.dpClose();
-										} else {
-											//return false;
 										}
 									}
 								}
@@ -73,14 +74,19 @@
             <h1>jquery.datePicker example: datePicker which appears on focus - part 2.</h1>
 			<p><a href="index.html">&lt; date picker home</a></p>
             <p>
-                This example shows how to bind the focus and blur events on an element to the
-				dpDisplay and dpClose functions to make the date picker popup when the element
-				receives focus and disappear when the element is blurred.
+                This example shows how to try and make the date picker appear on focus of it's associated
+				text field...
             </p>
 			<p>
 				This is better than <a href="datePickerOnFocus.html">part 1</a> because it now works in Firefox,
-				Opera and even slightly in IE. Sometimes it works fine in Safari but sometimes it seems to lock it
-				up and confuse it.
+				Opera, Safari and even IE... I also added an extra select above the date pickers because it seems like Safari
+				doesn't let you tab to links by default and this way there is something above the inputs for you to
+				tab to...
+			</p>
+			<p>
+				The problem with IE seems to be that whenever a focus event is triggered it happens twice - once with the jquery passed data
+				and then again without... Hence the need to the IE check on line 898 of the date picker which means that after selecting a date
+				in IE the tab order is messed up...
 			</p>
 			<form name="chooseDateForm" id="chooseDateForm" action="#">
 				<fieldset>
@@ -116,8 +122,47 @@
 				</fieldset>
 			</form>
 			<h2>Page sourcecode</h2>
-			<pre class="sourcecode">
-</pre>
+			<pre class="sourcecode">$(function()
+{
+	$('.date-pick')
+		.datePicker({createButton:false})
+		.bind(
+			'focus',
+			function(event, message)
+			{
+				if (message == $.dpConst.DP_INTERNAL_FOCUS) {
+					return true;
+				}
+				var dp = this;
+				var $dp = $(this);
+				$dp.dpDisplay();
+				$('*').bind(
+					'focus.datePicker',
+					function(event)
+					{
+						var $focused = $(this);
+						if (!$focused.is('.dp-applied')) // don't close the focused date picker if we just opened a new one!
+						{
+							// if the newly focused element isn't inside the date picker and isn't the original element which triggered
+							// the opening of the date picker
+
+							if ($focused.parents('#dp-popup').length == 0 && this != dp && !($.browser.msie && this == document.body)) {
+								$('*').unbind('focus.datePicker');
+								$dp.dpClose();
+							}
+						}
+					}
+				);
+				return false;
+			}
+		).bind(
+			'dpClosed',
+			function(event, selected)
+			{
+				$('*').unbind('focus.datePicker');
+			}
+		);
+});</pre>
 			<h2>Page CSS</h2>
 			<pre class="sourcecode">
 /* located in demo.css and creates a little calendar icon
