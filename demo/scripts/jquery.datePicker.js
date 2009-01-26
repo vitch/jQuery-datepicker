@@ -789,6 +789,7 @@
 							.attr(attrs)
 							.css(cssRules)
 							.append(
+//								$('<a href="#" class="selecteee">aaa</a>'),
 								$('<h2></h2>'),
 								$('<div class="dp-nav-prev"></div>')
 									.append(
@@ -853,7 +854,7 @@
 					);
 				}
 				c._renderCalendar();
-				
+
 				$(this.ele).trigger('dpDisplayed', $pop);
 				
 				if (!c.inline) {
@@ -863,8 +864,10 @@
 					if (this.horizontalPosition == $.dpConst.POS_RIGHT) {
 						$pop.css('left', eleOffset.left + $ele.width() - $pop.width() + c.horizontalOffset);
 					}
+//					$('.selectee', this.context).focus();
 					$(document).bind('mousedown', this._checkMouse);
 				}
+				
 			},
 			setRenderCallback : function(a)
 			{

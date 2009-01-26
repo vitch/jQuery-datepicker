@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
-		<title>jQuery datePicker focus demo 1</title>
+		<title>jQuery datePicker focus demo v2</title>
 		
 		<!-- firebug lite -->
 		<script type="text/javascript" src="firebug/firebug.js"></script>
@@ -28,28 +28,36 @@
             $(function()
             {
 				$('.date-pick')
-					.datePicker()
+					.datePicker({createButton:false})
 					.bind(
 						'focus',
 						function()
 						{
-							$(this).dpDisplay();
+							var $dp = $(this);
+							$dp.dpDisplay();
+							$('*').bind(
+								'focus.datePicker',
+								function(event)
+								{
+									var $focused = $(this);
+									if (!$focused.is('.dp-applied')) // don't close the focused date picker if we just opened a new one!
+									{
+										if ($focused.parents('#dp-popup').length == 0 && this != $dp[0]) {
+											$('*').unbind('focus.datePicker');
+											$dp.dpClose();
+										} else {
+											//return false;
+										}
+									}
+								}
+							);
+							return false;
 						}
 					).bind(
-						'blur',
-						function(event)
+						'dpClosed',
+						function(event, selected)
 						{
-							// works good in Firefox... But how to get it to work in IE, Safari and Opera?
-							// maybe delegate listener on document added when date picker opens which closes on focus of an element which isn't in the date picker?
-							if ($.browser.mozilla) {
-								var $el = $(event.originalEvent.explicitOriginalTarget);
-								if ($el.parents('#dp-popup').length == 0)
-								{
-									$(this).dpClose();
-									return true;
-								}
-
-							}
+							$('*').unbind('focus.datePicker');
 						}
 					);
             });
@@ -58,20 +66,30 @@
 	</head>
 	<body>
         <div id="container">
-            <h1>jquery.datePicker example: datePicker which appears on focus v1.</h1>
+            <h1>jquery.datePicker example: datePicker which appears on focus - part 2.</h1>
 			<p><a href="index.html">&lt; date picker home</a></p>
             <p>
                 This example shows how to bind the focus and blur events on an element to the
 				dpDisplay and dpClose functions to make the date picker popup when the element
 				receives focus and disappear when the element is blurred.
             </p>
-            <p>
-				Unfortunately it only works in Firefox... Continued in <a href="datePickerOnFocus2.html">part 2</a>.
-            </p>
+			<p>
+				This is better than <a href="datePickerOnFocus.html">part 1</a> because it now works in Firefox,
+				Opera and slightly in IE. It still hates Safari though :(
+			</p>
 			<form name="chooseDateForm" id="chooseDateForm" action="#">
 				<fieldset>
 					<legend>Test date picker form</legend>
                     <ol>
+                        <li>
+                            <label for="test-select">Test select:</label>
+                            <select name="test-select" id="test-select" style="width: 170px">
+                                <option value="1">Test SELECT </option>
+                                <option value="2">Doesn't shine through</option>
+                                <option value="3">Even in IE</option>
+                                <option value="4">Yay!</option>
+                            </select>
+                        </li>
                         <li>
                             <label for="date1">Date 1:</label>
 							<input name="date1" id="date1" class="date-pick" />
@@ -81,8 +99,8 @@
 							<input name="date2" id="date2" class="date-pick" />
 						</li>
                         <li>
-                            <label for="test-select">Test select:</label>
-                            <select name="test-select" id="test-select" style="width: 170px">
+                            <label for="test-select2">Test select:</label>
+                            <select name="test-select2" id="test-select2" style="width: 170px">
                                 <option value="1">Test SELECT </option>
                                 <option value="2">Doesn't shine through</option>
                                 <option value="3">Even in IE</option>
@@ -94,41 +112,7 @@
 			</form>
 			<h2>Page sourcecode</h2>
 			<pre class="sourcecode">
-$(function()
-{
-	$('.date-pick')
-		.datePicker()
-		.bind(
-			'focus',
-			function()
-			{
-				$(this).dpDisplay();
-			}
-		).bind(
-			'blur',
-			function(event)
-			{
-				// works good in Firefox... But how to get it to work in IE?
-				if ($.browser.mozilla) {
-
-					var el = event.explicitOriginalTarget
-					
-					var cal = $('#dp-popup')[0];
-				
-					while (true){
-						if (el == cal) {
-							return false;
-						} else if (el == document) {
-							$(this).dpClose();
-							return true;
-						} else {
-							el = $(el).parent()[0];
-						}
-					}
-				}
-			}
-		);
-});</pre>
+</pre>
 			<h2>Page CSS</h2>
 			<pre class="sourcecode">
 /* located in demo.css and creates a little calendar icon
