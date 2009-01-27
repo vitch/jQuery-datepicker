@@ -1,0 +1,32 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+	</head>
+	<body>
+		<div id="form-contents">
+			<div class="step">
+				<h2>Step 1: Choose Duration of stay</h2>
+
+				<h3>Underlying rules</h3>
+				<ul>
+					<li>3 nights must start on a Friday</li>
+					<li>5 nights must start on a Monday</li>
+					<li>7 nights must start on a Saturday</li>
+				</ul>
+
+				<select id="durationRules" name="durationRules">
+					<option value="3,5">3 Nts Fri-Mon</option>
+					<option value="5,1">5 Nts Mon-Fri</option>
+					<option value="7,6">7 Nts Sat-Sat</option>
+				</select>
+			</div>
+			<div class="step">
+				<h2>Step 2: Choose a holiday start date</h2>
+				<input type="text" id="datePicker" name="datePicker" />
+			</div>
+			<div class="step">
+				<input type="submit" value="Submit" />
+			</div>
+		</div>
+	</body>
+</html>
