@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
-		<title>jQuery datePicker demo: limit available dates</title>
+		<title>jQuery datePicker demo: limit available dates with ajax</title>
 		
 		<!-- firebug lite -->
 		<script type="text/javascript" src="firebug/firebug.js"></script>
@@ -47,7 +47,7 @@
 					'click',
 					function()
 					{
-						$.get('datePickerLimitAvailableDatesAjaxToLoad.html', onDataLoaded);
+						$.get('datePickerLimitAvailableDatesAjaxToLoad.txt', onDataLoaded);
 						return false;
 					}
 				);
@@ -187,7 +187,7 @@
 	</head>
 	<body>
         <div id="container">
-            <h1>jQuery datePicker demo: limit available dates</h1>
+            <h1>jQuery datePicker demo: limit available dates with ajax</h1>
 			<p><a href="index.html">&lt; date picker home</a></p>
             <p>
                 The following example demonstrates how you can limit the available dates for clicking on the calendar based
