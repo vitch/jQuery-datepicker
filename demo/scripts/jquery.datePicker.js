@@ -993,7 +993,7 @@
 						var sd = new Date(this.startDate.getTime());
 						sd.addMonths(1);
 						if (this.displayedYear == sd.getFullYear() && this.displayedMonth == sd.getMonth()) {
-							$('dp-calendar td.other-month', this.context).each(
+							$('.dp-calendar td.other-month', this.context).each(
 								function()
 								{
 									var $this = $(this);
