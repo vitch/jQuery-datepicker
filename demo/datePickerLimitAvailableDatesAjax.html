@@ -30,6 +30,8 @@
 				
 				var allowedDay;
 				var numNights;
+
+				var tomorrow = new Date().addDays(1);
 				
 				// add a listener for the form submit for this demo to illustrate that the date field on the form is being sucessfully set
 				$('#chooseDateForm').bind(
@@ -63,10 +65,11 @@
 					$datePicker = $('#datePicker', $fillmewithajax);
 					$datePicker.datePicker(
 						{
+							startDate: tomorrow.asString(),
 							renderCallback:function ($td, thisDate, month, year)
 							{
 								var alreadyDisabled = $td.is('.disabled');
-								if (allowedDay && thisDate.getDay() != allowedDay && !alreadyDisabled) {
+								if (allowedDay && !isNaN(allowedDay) && thisDate.getDay() != allowedDay && !alreadyDisabled) {
 									// the disabled class prevents the user from being able to select the element.
 									// the disallowed-day class provides a hook for different CSS styling of cells which are disabled 
 									// by this rule vs cells which are disabled because e.g. they fall outside the startDate - endDate range.
@@ -113,11 +116,17 @@
 							numNights = parseInt(rules[0]);
 							allowedDay = parseInt(rules[1]);
 
-							// if the current selected date is illegal via the new rules then remove it...
-							if (Date.fromString($datePicker.val()).getDay() != allowedDay) {
-								$datePicker.val('');
+							var currentSelectedDate = Date.fromString($datePicker.val());
+							if (currentSelectedDate.getTime() < tomorrow.getTime())
+							{
+								currentSelectedDate = Date.fromString(tomorrow.asString());
 							}
 
+							// if the current selected date is illegal via the new rules then keep incrementing to the next acceptable date...
+							while (allowedDay && currentSelectedDate.getDay() != allowedDay) {
+								currentSelectedDate.addDays(1);
+							}
+							$datePicker.dpSetSelected(currentSelectedDate.asString(), true, true);
 						}
 					).trigger('change');
 				}
