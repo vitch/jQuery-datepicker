@@ -300,7 +300,7 @@
 							}
 						}
 						var includedNightCells = [];
-						for (var j=i; j < i+numNights; j++) {
+						for (var j=i; j< i +numNights; j++) {
 							includedNightCells.push($allTDs[j]);
 						}
 						var $includedNightCells = $(includedNightCells)	;
@@ -373,17 +373,9 @@
 	border: 1px solid;
 	padding: 3px 4px;
 }
-table.jCalendar td.disabled,
-table.jCalendar td.disabled.dp-hover
+table.jCalendar td.disabled
 {
-	background: #ccc;
-	border: 1px solid #ccc;
-	color: #000;
-}
-table.jCalendar td.disabled.other-month,
-table.jCalendar td.disabled.other-month.dp-hover
-{
-	border: 1px solid #eee;
+	border: 1px solid #bbb;
 }
 table.jCalendar td.highlight,
 table.jCalendar td.other-month.highlight
@@ -405,17 +397,28 @@ table.jCalendar td.selected.dp-hover
 	color: #000;
 	border: 1px solid #000;
 }
+/** 
+ * Deal with the fact that all days are now disabled but we want to be able to visually 
+ * differentiate between dates that are disabled because they are the wrong day of the
+ * week and dates disabled for another reason...
+ **/
+table.jCalendar td.disallowed-day,
+table.jCalendar td.disallowed-day.dp-hover
+{
+	background: #ccc;
+	border: 1px solid #ccc;
+	color: #000;
+}
+table.jCalendar td.disallowed-day.other-month
+{
+	background: #ddd;
+	border: 1px solid #ddd;
+}
 table.jCalendar td.included-night,
 table.jCalendar td.other-month.included-night
 {
 	border: 1px solid #ee0; 
 	background: #ee0;
-}
-
-div#datepicker-message
-{
-	text-align: center;
-	padding: 2px;
 }
 
 div.step
