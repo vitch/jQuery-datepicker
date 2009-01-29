@@ -990,14 +990,15 @@
 					var d = this.startDate.getDate();
 					if (d > 20) {
 						// check if the startDate is last month as we might need to add some disabled classes...
-						var sd = new Date(this.startDate.getTime());
+						var st = this.startDate.getTime();
+						var sd = new Date(st);
 						sd.addMonths(1);
 						if (this.displayedYear == sd.getFullYear() && this.displayedMonth == sd.getMonth()) {
 							$('.dp-calendar td.other-month', this.context).each(
 								function()
 								{
 									var $this = $(this);
-									if (Number($this.text()) < d) {
+									if (Date.fromString($this.data('datePickerDate')).getTime() < st) {
 										$this.addClass('disabled');
 									}
 								}
