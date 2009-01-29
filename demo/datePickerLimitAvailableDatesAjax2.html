@@ -104,6 +104,17 @@
 										}
 									);
 								}
+								$td.bind(
+									'click',
+									function()
+									{
+										var $this = $(this);
+										if ($this.is('.disabled'))
+										{
+											$('#datepicker-message').slideDown(100);
+										}
+									}
+								);
 							}
 						}
 					).bind(
@@ -114,7 +125,9 @@
 							var message = selectedOption.attr('rel');
 							if (message)
 							{
-								$(datePickerDiv).append('<div id="datepicker-message">' + message + '</div>')
+								$(datePickerDiv).append(
+									$('<div id="datepicker-message">' + message + '</div>').hide()
+								);
 							}
 						}
 					);

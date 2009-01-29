@@ -15,9 +15,9 @@
 				</ul>
 
 				<select id="durationRules" name="durationRules">
-					<option value="3,5">3 Nts Fri-Mon</option>
-					<option value="5,1">5 Nts Mon-Fri</option>
-					<option value="7,6">7 Nts Sat-Sat</option>
+					<option value="3,5" rel="3 Nts must start on Friday">3 Nts Fri-Mon</option>
+					<option value="5,1" rel="5 Nts must start on Monday">5 Nts Mon-Fri</option>
+					<option value="7,6" rel="7 Nts must start on Saturday">7 Nts Sat-Sat</option>
 					<option value="2">2 nights anytime</option>
 				</select>
 			</div>
