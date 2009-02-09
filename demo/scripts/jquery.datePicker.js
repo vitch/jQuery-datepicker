@@ -532,6 +532,8 @@
 		this.displayClose		=	null;
 		this.rememberViewedMonth=	null;
 		this.selectMultiple		=	null;
+		this.numSelectable		=	null;
+		this.numSelected		=	null;
 		this.verticalPosition	=	null;
 		this.horizontalPosition	=	null;
 		this.verticalOffset		=	null;
@@ -557,6 +559,8 @@
 				this.displayClose = s.displayClose;
 				this.rememberViewedMonth =	s.rememberViewedMonth;
 				this.selectMultiple = s.selectMultiple;
+				this.numSelectable = s.selectMultiple ? s.numSelectable : 1;
+				this.numSelected = 0;
 				this.verticalPosition = s.verticalPosition;
 				this.horizontalPosition = s.horizontalPosition;
 				this.hoverClass = s.hoverClass;
@@ -673,12 +677,17 @@
 				}
 				if (this.selectMultiple == false) {
 					this.selectedDates = {};
+					this.numSelected = 0;
 					$('td.selected', this.context).removeClass('selected').parent().removeClass('selectedWeek');
+				} else if (v && this.numSelected == this.numSelectable) {
+					// can't select any more dates...
+					return;
 				}
 				if (moveToMonth && (this.displayedMonth != d.getMonth() || this.displayedYear != d.getFullYear())) {
 					this.setDisplayedMonth(d.getMonth(), d.getFullYear(), true);
 				}
 				this.selectedDates[d.toString()] = v;
+				this.numSelected += v ? 1 : -1;
 				var selectorString = 'td.' +( d.getMonth() == this.displayedMonth ? 'current-month' : 'other-month');
 				var $td;
 				$(selectorString, this.context).each(
@@ -694,6 +703,7 @@
 						}
 					}
 				);
+				$('td', this.context).not('.selected')[this.selectMultiple &&  this.numSelected == this.numSelectable ? 'addClass' : 'removeClass']('unselectable');
 				
 				if (dispatchEvents)
 				{
@@ -909,6 +919,8 @@
 					{
 						$td.parent().addClass('selectedWeek');
 					}
+				} else  if (c.selectMultiple && c.numSelected == c.numSelectable) {
+					$td.addClass('unselectable');
 				}
 				
 			},
@@ -1112,6 +1124,7 @@
 		closeOnSelect		: true,
 		displayClose		: false,
 		selectMultiple		: false,
+		numSelectable		: Number.MAX_VALUE,
 		clickInput			: false,
 		rememberViewedMonth	: true,
 		selectWeek			: false,

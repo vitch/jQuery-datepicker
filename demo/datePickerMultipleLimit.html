@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
-		<title>jQuery datePicker datePickerMultiple demo</title>
+		<title>jQuery datePicker datePickerMultiple demo with limit</title>
 		
 		<!-- firebug lite -->
 		<script type="text/javascript" src="firebug/firebug.js"></script>
@@ -33,7 +33,8 @@
 							createButton:false,
 							displayClose:true,
 							closeOnSelect:false,
-							selectMultiple:true
+							selectMultiple:true,
+							numSelectable:3
 						}
 					)
 					.bind(
@@ -69,16 +70,19 @@
 	</head>
 	<body>
         <div id="container">
-            <h1>jquery.datePicker example: datePicker with multiple select enabled</h1>
+            <h1>jquery.datePicker example: datePicker with multiple select enabled and a limit on the number of selectable days</h1>
 			<p><a href="index.html">&lt; date picker home</a></p>
             <p>
                 The following example shows how you can provide options to the date picker to allow you
-				to select multiple dates. In this case a "dateSelected" event is triggered every time a date is
-				selected or unselected. When the calendar is closed a "dpClosed" event is triggered.
+				to select multiple dates. It extends the <a href="datePicekrMultiple.html">basic multiple select</a>
+				example and shows how you can also pass a <em>numSelectable</em> to limit the number of dates that can
+				be selected at a time... A class of <em>unselectable</em> is added to all dates which aren't selected
+				once you have selected the numSelectable. In my example css this is styled the same as disabled dates but
+				you can style it as you like...
             </p>
 			<p>
-				There is an extension to the example which shows how you can <a href="datePickerMultipleLimit.html">
-				limit the number of dates selectable</a>.
+				Thanks to ioframe for the <a href="http://code.google.com/p/jquery-datepicker/issues/detail?id=8">patch</a> which inspired this
+				functionality :)
 			<p>
 				<strong>NOTE</strong>: You will need firebug to see the results of the demo - firebug lite is included in this page
 				so whatever browser you are in just press F12 to open up the firebug console.
@@ -98,7 +102,8 @@ $(function()
 				createButton:false,
 				displayClose:true,
 				closeOnSelect:false,
-				selectMultiple:true
+				selectMultiple:true,
+				numSelectable:3
 			}
 		)
 		.bind(

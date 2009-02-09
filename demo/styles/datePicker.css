@@ -48,6 +48,12 @@ table.jCalendar td.disabled, table.jCalendar td.disabled.dp-hover {
 	background: #bbb;
 	color: #888;
 }
+table.jCalendar td.unselectable,
+table.jCalendar td.unselectable:hover,
+table.jCalendar td.unselectable.dp-hover {
+	background: #bbb;
+	color: #888;
+}
 
 /* For the popup */
 
