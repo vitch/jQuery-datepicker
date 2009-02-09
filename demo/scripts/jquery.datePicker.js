@@ -179,6 +179,7 @@
  * @option Boolean closeOnSelect Whether to close the date picker when a date is selected. Default is true.
  * @option Boolean displayClose Whether to create a "Close" button within the date picker popup. Default is false.
  * @option Boolean selectMultiple Whether a user should be able to select multiple dates with this date picker. Default is false.
+ * @option Number numSelectable The maximum number of dates that can be selected where selectMultiple is true. Default is a very high number.
  * @option Boolean clickInput If the matched element is an input type="text" and this option is true then clicking on the input will cause the date picker to appear.
  * @option Boolean rememberViewedMonth Whether the datePicker should remember the last viewed month and open on it. If false then the date picker will always open with the month for the first selected date visible.
  * @option Boolean selectWeek Whether to select a complete week at a time...
