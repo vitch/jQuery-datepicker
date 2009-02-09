@@ -780,8 +780,17 @@
 						}
 					};
 					this._checkMouse = _checkMouse;
-				
-					this._closeCalendar(true);
+					
+					c._closeCalendar(true);
+					$(document).bind(
+						'keydown.datepicker', 
+						function(event)
+						{
+							if (event.keyCode == 27) {
+								c._closeCalendar();
+							}
+						}
+					);
 				}
 				
 				if (!c.rememberViewedMonth)
@@ -1068,6 +1077,7 @@
 				if (!ele || ele == this.ele)
 				{
 					$(document).unbind('mousedown.datepicker');
+					$(document).unbind('keydown.datepicker');
 					this._clearCalendar();
 					$('#dp-popup a').unbind();
 					$('#dp-popup').empty().remove();
