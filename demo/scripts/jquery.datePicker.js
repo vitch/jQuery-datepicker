@@ -663,6 +663,10 @@
 			},
 			setSelected : function(d, v, moveToMonth, dispatchEvents)
 			{
+				if (d < this.startDate || d > this.endDate) {
+					// Don't allow people to select dates outside range...
+					return;
+				}
 				var s = this.settings;
 				if (s.selectWeek)
 				{
