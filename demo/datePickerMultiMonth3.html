@@ -45,6 +45,15 @@
 						//console.log('dateSelected', arguments);
 					}
 				);
+
+				$('#getSelected').bind(
+					'click',
+					function(e)
+					{
+						alert($('#multimonth').dpmmGetSelected());
+						return false;
+					}
+				);
             });
 		</script>
 
@@ -79,6 +88,9 @@
 			<p>
 				Note that the relevant events are passed through to this page. For dpMonthChanged the month and year passed correspond to the
 				first month out of the ones shown.
+			</p>
+			<p>
+				You can also call dpmmGetSelected on the datePickerMultiMonth which is the same as dpGetSelected on a normal date picker. <a href="#" id="getSelected">Example</a>.
 			</p>
 			<form name="chooseDateForm" id="chooseDateForm" action="#">
 				<div id="multimonth">This will be replaced with the multimonth select</div>

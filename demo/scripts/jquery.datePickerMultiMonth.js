@@ -65,12 +65,21 @@
 					$dpmm.append($date);
 				})(i);
 			}
-			// dodgy hack so that I can set the month to the correct value and trigger a redraw of the other elements... 
-			pickers[0].dpSetDisplayedMonth(1, 3000);
-			// set the month to the correct value so the other date pickers get set to the correct months...
-			pickers[0].dpSetDisplayedMonth(Number(s.month), Number(s.year));
+			
+			var basePicker = pickers[0];
+			$dpmm.data('dpBasePicker', basePicker);
 
+			// dodgy hack so that I can set the month to the correct value and trigger a redraw of the other elements... 
+			basePicker.dpSetDisplayedMonth(1, 3000);
+			// set the month to the correct value so the other date pickers get set to the correct months...
+			basePicker.dpSetDisplayedMonth(Number(s.month), Number(s.year));
+			
 			return this;
+		},
+		dpmmGetSelected : function()
+		{
+			var basePicker = $(this).data('dpBasePicker');
+			return basePicker.dpGetSelected();
 		}
 	});
 	
