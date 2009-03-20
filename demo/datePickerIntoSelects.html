@@ -35,7 +35,7 @@
 						{
 							createButton:false,
 							startDate:'01/01/2005',
-							endDate:'31/12/2008'
+							endDate:'31/12/2010'
 						}
 					).bind(
 						// when the link is clicked display the date picker
@@ -63,13 +63,10 @@
 					
 				var updateSelects = function (selectedDate)
 				{
-					selectedDate = new Date(selectedDate);
-					var d = selectedDate.getDate();
-					var m = selectedDate.getMonth();
-					var y = selectedDate.getFullYear();
-					($('#d')[0]).selectedIndex = d - 1;
-					($('#m')[0]).selectedIndex = m;
-					($('#y')[0]).selectedIndex = y - 2005;
+					var selectedDate = new Date(selectedDate);
+					$('#d option[value=' + selectedDate.getDate() + ']').attr('selected', 'selected');
+					$('#m option[value=' + (selectedDate.getMonth()+1) + ']').attr('selected', 'selected');
+					$('#y option[value=' + (selectedDate.getFullYear()) + ']').attr('selected', 'selected');
 				}
 				// listen for when the selects are changed and update the picker
 				$('#d, #m, #y')
@@ -88,9 +85,7 @@
 				
 				// default the position of the selects to today
 				var today = new Date();
-				($('#d')[0]).selectedIndex = today.getDate() - 1;
-				($('#m')[0]).selectedIndex = today.getMonth();
-				($('#y')[0]).selectedIndex = today.getFullYear() - 2005;
+				updateSelects(today.getTime());
 				
 				// and update the datePicker to reflect it...
 				$('#d').trigger('change');
@@ -171,6 +166,8 @@
                                 <option value="2006">2006</option>
                                 <option value="2007">2007</option>
                                 <option value="2008">2008</option>
+                                <option value="2009">2009</option>
+                                <option value="2010">2010</option>
                             </select>
                         </li>
 						<li>
@@ -180,8 +177,7 @@
 				</fieldset>
 			</form>
 			<h2>Page sourcecode</h2>
-			<pre class="sourcecode">
-$(function()
+			<pre class="sourcecode">$(function()
 {
 	
 	// initialise the "Select date" link
@@ -191,7 +187,7 @@ $(function()
 			{
 				createButton:false,
 				startDate:'01/01/2005',
-				endDate:'31/12/2008'
+				endDate:'31/12/2010'
 			}
 		).bind(
 			// when the link is clicked display the date picker
@@ -219,13 +215,10 @@ $(function()
 		
 	var updateSelects = function (selectedDate)
 	{
-		selectedDate = new Date(selectedDate);
-		var d = selectedDate.getDate();
-		var m = selectedDate.getMonth();
-		var y = selectedDate.getFullYear();
-		($('#d')[0]).selectedIndex = d - 1;
-		($('#m')[0]).selectedIndex = m;
-		($('#y')[0]).selectedIndex = y - 2005;
+		var selectedDate = new Date(selectedDate);
+		$('#d option[value=' + selectedDate.getDate() + ']').attr('selected', 'selected');
+		$('#m option[value=' + (selectedDate.getMonth()+1) + ']').attr('selected', 'selected');
+		$('#y option[value=' + (selectedDate.getFullYear()) + ']').attr('selected', 'selected');
 	}
 	// listen for when the selects are changed and update the picker
 	$('#d, #m, #y')
@@ -244,9 +237,7 @@ $(function()
 	
 	// default the position of the selects to today
 	var today = new Date();
-	($('#d')[0]).selectedIndex = today.getDate() - 1;
-	($('#m')[0]).selectedIndex = today.getMonth();
-	($('#y')[0]).selectedIndex = today.getFullYear() - 2005;
+	updateSelects(today.getTime());
 	
 	// and update the datePicker to reflect it...
 	$('#d').trigger('change');
