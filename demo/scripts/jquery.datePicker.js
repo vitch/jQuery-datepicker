@@ -272,6 +272,8 @@
 								'click',
 								function()
 								{
+									// The change event doesn't happen until the input loses focus so we need to manually trigger it...
+									$this.trigger('change');
 									$this.dpDisplay();
 								}
 							);
