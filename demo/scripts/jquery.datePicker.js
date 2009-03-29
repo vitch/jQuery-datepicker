@@ -69,10 +69,10 @@
 			var calendarTable = $(dc('table'))
 									.attr(
 										{
-											'cellspacing':2,
-											'className':'jCalendar'
+											'cellspacing':2
 										}
 									)
+									.addClass('jCalendar')
 									.append(
 										(s.showHeader != $.dpConst.SHOW_HEADER_NONE ? 
 											$(dc('thead'))
@@ -127,7 +127,7 @@
 					var thisMonth = currentDate.getMonth() == month;
 					var d = $(dc('td'))
 								.text(currentDate.getDate() + '')
-								.attr('className', (thisMonth ? 'current-month ' : 'other-month ') +
+								.addClass((thisMonth ? 'current-month ' : 'other-month ') +
 													(currentDate.isWeekend() ? 'weekend ' : 'weekday ') +
 													(thisMonth && currentDate.getTime() == today.getTime() ? 'today ' : '')
 								)
@@ -751,7 +751,7 @@
 					$createIn = $(this.ele);
 					attrs = {
 						'id'		:	'calendar-' + this.ele._dpId,
-						'className'	:	'dp-popup dp-popup-inline'
+						'class'	:	'dp-popup dp-popup-inline'
 					};
 
 					$('.dp-popup', $createIn).remove();
@@ -761,7 +761,7 @@
 					$createIn = $('body');
 					attrs = {
 						'id'		:	'dp-popup',
-						'className'	:	'dp-popup'
+						'class'	:	'dp-popup'
 					};
 					cssRules = {
 						'top'	:	eleOffset.top + c.verticalOffset,
@@ -853,8 +853,7 @@
 												}
 											)
 									),
-								$('<div></div>')
-									.attr('className', 'dp-calendar')
+								$('<div class="dp-calendar"></div>')
 							)
 							.bgIframe()
 						);
