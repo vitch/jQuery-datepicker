@@ -257,7 +257,9 @@
 								'change',
 								function()
 								{
-									if (this.value != '') {
+									if (this.value == '') {
+										controller.clearSelected();
+									} else {
 										var d = Date.fromString(this.value);
 										if (d) {
 											controller.setSelected(d, true, true);
@@ -681,9 +683,7 @@
 					return;
 				}
 				if (this.selectMultiple == false) {
-					this.selectedDates = {};
-					this.numSelected = 0;
-					$('td.selected', this.context).removeClass('selected').parent().removeClass('selectedWeek');
+					this.clearSelected();
 				} else if (v && this.numSelected == this.numSelectable) {
 					// can't select any more dates...
 					return;
@@ -732,6 +732,12 @@
 					}
 				}
 				return r;
+			},
+			clearSelected : function()
+			{
+				this.selectedDates = {};
+				this.numSelected = 0;
+				$('td.selected', this.context).removeClass('selected').parent().removeClass('selectedWeek');
 			},
 			display : function(eleAlignTo)
 			{
