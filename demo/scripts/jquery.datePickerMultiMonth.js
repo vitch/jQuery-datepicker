@@ -9,7 +9,7 @@
 	$.fn.extend({
 		datePickerMultiMonth : function(s)
 		{
-			if (s.inline == false) {
+			if (!s.inline) {
 				throw new Error('Not yet implemented for popup calendars :(');
 			}
 			if (s.numMonths == undefined) {
