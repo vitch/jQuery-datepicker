@@ -366,6 +366,7 @@
  * @param String d A string representing the date you want to select (formatted according to Date.format).
  * @param Boolean v Whether you want to select (true) or deselect (false) this date. Optional - default = true.
  * @param Boolean m Whether you want the date picker to open up on the month of this date when it is next opened. Optional - default = true.
+ * @param Boolean e Whether you want the date picker to dispatch events related to this change of selection. Optional - default = true.
  * @type jQuery
  * @name dpSetSelected
  * @cat plugins/datePicker
@@ -375,11 +376,12 @@
  * $('.date-picker').dpSetSelected('01/01/2010');
  * @desc Creates a date picker associated with all elements with a class of "date-picker" then sets the selected date on these date pickers to the first Janurary 2010. When the date picker is next opened it will display Janurary 2010.
  **/
-		dpSetSelected : function(d, v, m)
+		dpSetSelected : function(d, v, m, e)
 		{
 			if (v == undefined) v=true;
 			if (m == undefined) m=true;
-			return _w.call(this, 'setSelected', Date.fromString(d), v, m, true);
+			if (e == undefined) e=true;
+			return _w.call(this, 'setSelected', Date.fromString(d), v, m, e);
 		},
 /**
  * Sets the month that will be displayed when the date picker is next opened. If the passed month is before startDate then the month containing startDate will be displayed instead. If the passed month is after endDate then the month containing the endDate will be displayed instead.
