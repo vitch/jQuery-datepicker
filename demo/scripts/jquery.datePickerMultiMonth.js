@@ -14,12 +14,15 @@
 			var dps = $.extend({}, $.fn.datePicker.defaults, s);
 
 			$dpmm = $(this);
+			var pickers = [];
+			var basePicker;
+
+			var m;
 			
 			if (s.inline) {
 
 				$dpmm.html('');
 
-				var pickers = [];
 				for (var i=0; i<s.numMonths; i++)
 				{
 					(function(i) {
@@ -62,45 +65,79 @@
 						$dpmm.append($date);
 					})(i);
 				}
+				basePicker = pickers[0];
 				
-				var basePicker = pickers[0];
-				$dpmm.data('dpBasePicker', basePicker);
-
-				// dodgy hack so that I can set the month to the correct value and trigger a redraw of the other elements... 
-				basePicker.dpSetDisplayedMonth(1, 3000);
-				// set the month to the correct value so the other date pickers get set to the correct months...
-				basePicker.dpSetDisplayedMonth(Number(s.month), Number(s.year));
 			} else {
-				$dpmm.data('dpBasePicker', $dpmm[0]);
 				$dpmm.datePicker(dps).bind(
 					'dateSelected',
 					function(event, date, $td, status)
 					{
+						$dpmm.trigger('dateSelected', [date, $td, status]);
+						pickers[1].dpSetSelected(date.asString(), status, false);
+						return false;
 					}
 				).bind(
 					'dpDisplayed',
 					function(event, datePickerDiv)
 					{
+						pickers = [$dpmm];
 						var $popup = $(datePickerDiv);
 						var w = $popup.css('width');
 						$popup.find('.dp-nav-next').css('display', 'none').end().wrapInner('<div class="dp-applied"><div class="dp-popup dp-popup-inline"></div></div>').css({width: 'auto'});
 
-						dps.inline = true;
+						var s = $.extend({}, dps);
+
+						s.inline = true;
+						s.month = m;
 
 						for (var i=1; i<s.numMonths; i++) {
-							var $dp = $('<div />');
-							$popup.append($dp);
-							$dp.datePicker(dps).find('.dp-nav-next').css('display', i == s.numMonths-1 ? 'block' : 'none').end()
-								.find('.dp-nav-prev').css('display', 'none').end();
+							var last = i == s.numMonths-1;
+							(function(i) {
+								var $dp = $('<div />');
+								$popup.append($dp);
+								s.month ++;
+								$dp.datePicker(s).bind(
+									'dpMonthChanged',
+									function(event, displayedMonth, displayedYear)
+									{
+										pickers[i-1].dpSetDisplayedMonth(displayedMonth-1, displayedYear);
+										if (!last)	{
+											pickers[i+1].dpSetDisplayedMonth(displayedMonth+1, displayedYear);
+										}
+										return false;
+									}
+								).bind(
+									'dateSelected',
+									function(event, date, $td, status)
+									{
+									}
+								).find('.dp-nav-next').css('display', last ? 'block' : 'none').end()
+									.find('.dp-nav-prev').css('display', 'none').end();
+								pickers.push($dp);
+							})(i);
 						}
 					}
 				).bind(
 					'dpMonthChanged',
 					function(event, displayedMonth, displayedYear)
 					{
+						m = displayedMonth;
+						//$dpmm.trigger('dpMonthChanged', [displayedMonth, displayedYear]);
+						if (pickers[1]) {
+							pickers[1].dpSetDisplayedMonth(displayedMonth+1, displayedYear);
+						}
+						return false;
 					}
 				);
+				basePicker = $dpmm;
 			}
+
+			$dpmm.data('dpBasePicker', basePicker);
+
+			// dodgy hack so that I can set the month to the correct value and trigger a redraw of the other elements... 
+			basePicker.dpSetDisplayedMonth(1, 3000);
+			// set the month to the correct value so the other date pickers get set to the correct months...
+			basePicker.dpSetDisplayedMonth(Number(s.month), Number(s.year));
 			
 			return this;
 		},
