@@ -17,7 +17,7 @@
 
 					var dps = $.extend({}, $.fn.datePicker.defaults, s);
 
-					$dpmm = $(this);
+					var $dpmm = $(this);
 					var pickers = [];
 					var basePicker;
 
