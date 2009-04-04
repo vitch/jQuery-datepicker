@@ -71,21 +71,28 @@
 				
 				var displayedMonth;
 				var displayedYear;
+				var selectedDate;
+
+				if (dps.closeOnSelect == false) throw new Error("Popup multi month date pickers must close on select");
+				if (dps.selectMultiple == true) throw new Error("Popup multi month date pickers aren't compatible with selectMultiple");
 
 				$dpmm.datePicker(dps).bind(
 					'dateSelected',
 					function(event, date, $td, status)
 					{
-						console.log('BASE dateSelected');
-						//$dpmm.trigger('dateSelected', [date, $td, status]);
-						//pickers[1].dpSetSelected(date.asString(), status, false);
-						//return false;
+						selectedDate = date.asString();
 					}
 				).bind(
 					'dpDisplayed',
 					function(event, datePickerDiv)
 					{
 						var $popup = $(datePickerDiv).empty().css({width: 'auto'});
+
+						var d = $dpmm.dpGetSelected();
+						if (d.length) {
+							selectedDate = new Date(d[0]).asString();
+						}
+						
 
 						for (var i=0; i<s.numMonths; i++) {
 							(function(i) {
@@ -104,13 +111,17 @@
 
 								$dp.datePicker(s).bind(
 										'dpMonthChanged',
-										function(event, displayedMonth, displayedYear)
+										function(event, newMonth, newYear)
 										{
+											if (i == 0)	{
+												displayedMonth = newMonth;
+												displayedYear = newYear;
+											}
 											if (!first) {
-												pickers[i-1].dpSetDisplayedMonth(displayedMonth-1, displayedYear);
+												pickers[i-1].dpSetDisplayedMonth(newMonth-1, newYear);
 											}
 											if (!last)	{
-												pickers[i+1].dpSetDisplayedMonth(displayedMonth+1, displayedYear);
+												pickers[i+1].dpSetDisplayedMonth(newMonth+1, newYear);
 											}
 											return false;
 										}
@@ -118,11 +129,18 @@
 										'dateSelected',
 										function(event, date, $td, status)
 										{
-											console.log('Inner dateSelected');
+											var d = date.asString();
+											if (d != selectedDate) {
+												basePicker.dpSetSelected(date.asString());
+												basePicker.dpClose();
+											}
 										}
 									).find('.dp-nav-next').css('display', last ? 'block' : 'none').end()
 									 .find('.dp-nav-prev').css('display', first ? 'block' : 'none').end();
-								s.month ++;
+
+								if (selectedDate) {
+									$dp.dpSetSelected(selectedDate, true, false);
+								}
 								pickers.push($dp);
 							})(i);
 						}
