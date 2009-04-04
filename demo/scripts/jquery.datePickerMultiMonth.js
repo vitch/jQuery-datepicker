@@ -68,65 +68,77 @@
 				basePicker = pickers[0];
 				
 			} else {
+				
+				var displayedMonth;
+				var displayedYear;
+
 				$dpmm.datePicker(dps).bind(
 					'dateSelected',
 					function(event, date, $td, status)
 					{
-						$dpmm.trigger('dateSelected', [date, $td, status]);
-						pickers[1].dpSetSelected(date.asString(), status, false);
-						return false;
+						console.log('BASE dateSelected');
+						//$dpmm.trigger('dateSelected', [date, $td, status]);
+						//pickers[1].dpSetSelected(date.asString(), status, false);
+						//return false;
 					}
 				).bind(
 					'dpDisplayed',
 					function(event, datePickerDiv)
 					{
-						pickers = [$dpmm];
-						var $popup = $(datePickerDiv);
-						var w = $popup.css('width');
-						$popup.find('.dp-nav-next').css('display', 'none').end().wrapInner('<div class="dp-applied"><div class="dp-popup dp-popup-inline"></div></div>').css({width: 'auto'});
+						var $popup = $(datePickerDiv).empty().css({width: 'auto'});
 
-						var s = $.extend({}, dps);
-
-						s.inline = true;
-						s.month = m;
-
-						for (var i=1; i<s.numMonths; i++) {
-							var last = i == s.numMonths-1;
+						for (var i=0; i<s.numMonths; i++) {
 							(function(i) {
+
+								var s = $.extend({}, dps);
+								s.inline = true;
+								s.month = displayedMonth + i;
+								s.year = displayedYear;
+								
+								var last = i == s.numMonths-1;
+								var first = i == 0;
+
 								var $dp = $('<div />');
 								$popup.append($dp);
-								s.month ++;
+
+
 								$dp.datePicker(s).bind(
-									'dpMonthChanged',
-									function(event, displayedMonth, displayedYear)
-									{
-										pickers[i-1].dpSetDisplayedMonth(displayedMonth-1, displayedYear);
-										if (!last)	{
-											pickers[i+1].dpSetDisplayedMonth(displayedMonth+1, displayedYear);
+										'dpMonthChanged',
+										function(event, displayedMonth, displayedYear)
+										{
+											if (!first) {
+												pickers[i-1].dpSetDisplayedMonth(displayedMonth-1, displayedYear);
+											}
+											if (!last)	{
+												pickers[i+1].dpSetDisplayedMonth(displayedMonth+1, displayedYear);
+											}
+											return false;
 										}
-										return false;
-									}
-								).bind(
-									'dateSelected',
-									function(event, date, $td, status)
-									{
-									}
-								).find('.dp-nav-next').css('display', last ? 'block' : 'none').end()
-									.find('.dp-nav-prev').css('display', 'none').end();
+									).bind(
+										'dateSelected',
+										function(event, date, $td, status)
+										{
+											console.log('Inner dateSelected');
+										}
+									).find('.dp-nav-next').css('display', last ? 'block' : 'none').end()
+									 .find('.dp-nav-prev').css('display', first ? 'block' : 'none').end();
+								s.month ++;
 								pickers.push($dp);
 							})(i);
 						}
 					}
 				).bind(
 					'dpMonthChanged',
-					function(event, displayedMonth, displayedYear)
+					function(event, newMonth, newYear)
 					{
-						m = displayedMonth;
-						//$dpmm.trigger('dpMonthChanged', [displayedMonth, displayedYear]);
-						if (pickers[1]) {
-							pickers[1].dpSetDisplayedMonth(displayedMonth+1, displayedYear);
-						}
-						return false;
+						displayedMonth = newMonth;
+						displayedYear = newYear;
+					}
+				).bind(
+					'dpClosed',
+					function(event, selected)
+					{
+						pickers = [];
 					}
 				);
 				basePicker = $dpmm;
