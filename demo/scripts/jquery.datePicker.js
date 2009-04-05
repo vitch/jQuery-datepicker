@@ -117,8 +117,8 @@
 					$this.removeClass(s.hoverClass);
 					$this.parent().removeClass('activeWeekHover');
 				}
-			};	
-			
+			};
+
 			var w = 0;
 			while (w++<weeksToDraw) {
 				var r = jQuery(dc('tr'));
@@ -138,7 +138,9 @@
 					if (s.renderCallback) {
 						s.renderCallback(d, currentDate, month, year);
 					}
-					currentDate.addDays(1);
+					// addDays(1) fails in some locales due to daylight savings. See issue 39.
+					//currentDate.addDays(1);
+					currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()+1);
 				}
 				tbody.append(r);
 			}
