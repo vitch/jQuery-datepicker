@@ -440,7 +440,7 @@ Date.fullYearStart = '20';
 	{
 		var f = Date.format;
 		
-		var d = new Date('01/01/1977');
+		var d = new Date('01/01/1970');
 		
 		if (s == '') return d;
 
