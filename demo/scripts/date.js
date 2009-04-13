@@ -409,15 +409,18 @@ Date.fullYearStart = '20';
 	 */
 	add("asString", function(format) {
 		var r = format || Date.format;
-		return r
-			.split('yyyy').join(this.getFullYear())
+		if (r.split('mm').length>1) { // ugly workaround to make sure we don't replace the m's in e.g. noveMber
+			r = r.split('mmmm').join(this.getMonthName(false))
+				.split('mmm').join(this.getMonthName(true))
+				.split('mm').join(_zeroPad(this.getMonth()+1))
+		} else {
+			r = r.split('m').join(this.getMonth()+1);
+		}
+		r = r.split('yyyy').join(this.getFullYear())
 			.split('yy').join((this.getFullYear() + '').substring(2))
-			.split('mmmm').join(this.getMonthName(false))
-			.split('mmm').join(this.getMonthName(true))
-			.split('mm').join(_zeroPad(this.getMonth()+1))
 			.split('dd').join(_zeroPad(this.getDate()))
-			.split('m').join(this.getMonth()+1)
 			.split('d').join(this.getDate());
+		return r;
 	});
 	
 	/**
