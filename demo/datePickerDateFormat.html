@@ -25,7 +25,7 @@
         
         <!-- page specific scripts -->
 		<script type="text/javascript" charset="utf-8">
-			Date.firstDayOfWeek = 7;
+			Date.firstDayOfWeek = 0;
 			Date.format = 'mm/dd/yyyy';
             $(function()
             {
@@ -40,7 +40,8 @@
 			<p><a href="index.html">&lt; date picker home</a></p>
             <p>
                 The following example shows how you can override the Date.format and Date.firstDayOfWeek to
-				make the date picker behave as expected in your locale.
+				make the date picker behave as expected in your locale. Date.firstDayOfWeek should be set to
+				a number between 0 (Sunday) and 6 (Saturday)
             </p>
 			<form name="chooseDateForm" id="chooseDateForm" action="#">
 				<fieldset>
@@ -68,7 +69,7 @@
 			</form>
 			<h2>Page sourcecode</h2>
 			<pre class="sourcecode">
-Date.firstDayOfWeek = 7;
+Date.firstDayOfWeek = 0;
 Date.format = 'mm/dd/yyyy';
 $(function()
 {
