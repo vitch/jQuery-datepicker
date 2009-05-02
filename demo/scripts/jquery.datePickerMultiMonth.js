@@ -32,7 +32,7 @@
 							(function(i) {
 								var first = i == 0;
 								var last = i == s.numMonths - 1;
-								var $date =  $('<div />')
+								var $date =  $('<div></div>')
 												.datePicker(dps)
 												.bind('dpMonthChanged',
 													function(event, displayedMonth, displayedYear)
@@ -109,7 +109,7 @@
 										var last = i == s.numMonths-1;
 										var first = i == 0;
 
-										var $dp = $('<div />');
+										var $dp = $('<div></div>');
 										$popup.append($dp);
 
 
