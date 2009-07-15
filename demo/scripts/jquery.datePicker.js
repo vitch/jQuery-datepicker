@@ -88,7 +88,7 @@
 			var month = s.month == undefined ? today.getMonth() : s.month;
 			var year = s.year || today.getFullYear();
 			
-			var currentDate = new Date(year, month, 1);
+			var currentDate = (new Date(year, month, 1, 12, 0, 0));
 			
 			
 			var firstDayOffset = Date.firstDayOfWeek - currentDate.getDay() + 1;
@@ -140,7 +140,8 @@
 					}
 					// addDays(1) fails in some locales due to daylight savings. See issue 39.
 					//currentDate.addDays(1);
-					currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()+1);
+					// set the time to midday to avoid any weird timezone issues??
+					currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()+1, 12, 0, 0);
 				}
 				tbody.append(r);
 			}
