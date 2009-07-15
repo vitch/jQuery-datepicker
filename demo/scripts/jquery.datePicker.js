@@ -84,6 +84,7 @@
 			var tbody = $(dc('tbody'));
 			
 			var today = (new Date()).zeroTime();
+			today.setHours(12);
 			
 			var month = s.month == undefined ? today.getMonth() : s.month;
 			var year = s.year || today.getFullYear();
