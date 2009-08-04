@@ -699,7 +699,7 @@
 				if (moveToMonth && (this.displayedMonth != d.getMonth() || this.displayedYear != d.getFullYear())) {
 					this.setDisplayedMonth(d.getMonth(), d.getFullYear(), true);
 				}
-				this.selectedDates[d.toString()] = v;
+				this.selectedDates[d.asString()] = v;
 				this.numSelected += v ? 1 : -1;
 				var selectorString = 'td.' +( d.getMonth() == this.displayedMonth ? 'current-month' : 'other-month');
 				var $td;
@@ -729,14 +729,14 @@
 			},
 			isSelected : function(d)
 			{
-				return this.selectedDates[d.toString()];
+				return this.selectedDates[d.asString()];
 			},
 			getSelected : function()
 			{
 				var r = [];
 				for(s in this.selectedDates) {
 					if (this.selectedDates[s] == true) {
-						r.push(Date.parse(s));
+						r.push(Date.fromString(s));
 					}
 				}
 				return r;
@@ -939,7 +939,6 @@
 						}
 					}
 				);
-				
 				if (c.isSelected(d)) {
 					$td.addClass('selected');
 					if (c.settings.selectWeek)
