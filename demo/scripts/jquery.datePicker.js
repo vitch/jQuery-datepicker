@@ -701,7 +701,7 @@
 				}
 				this.selectedDates[d.asString()] = v;
 				this.numSelected += v ? 1 : -1;
-				var selectorString = 'td.' +( d.getMonth() == this.displayedMonth ? 'current-month' : 'other-month');
+				var selectorString = 'td.' + (d.getMonth() == this.displayedMonth ? 'current-month' : 'other-month');
 				var $td;
 				$(selectorString, this.context).each(
 					function()
