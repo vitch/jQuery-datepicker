@@ -1079,7 +1079,8 @@
 								function()
 								{
 									var $this = $(this);
-									if (Number($this.text()) > d) {
+									var cellDay = Number($this.text());
+									if (cellDay < 13 && cellDay > d) {
 										$this.addClass('disabled');
 									}
 								}
