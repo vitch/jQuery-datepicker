@@ -180,6 +180,11 @@
 		{
 			var basePicker = $(this).data('dpBasePicker');
 			return basePicker.dpGetSelected();
+		},
+		dpmmSetSelected : function(d, v, m, e)
+		{
+			var basePicker = $(this).data('dpBasePicker');
+			return basePicker.dpSetSelected(d, v, m, e);
 		}
 	});
 	
