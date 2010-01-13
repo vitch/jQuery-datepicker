@@ -40,19 +40,19 @@
 					}
 				);
 				var bankHolidays = {};
-				bankHolidays['d' + ((new Date(2007, 0, 1)).getTime())] = 'New Year\'s day';
-				bankHolidays['d' + ((new Date(2007, 3, 6)).getTime())] = 'Good friday';
-				bankHolidays['d' + ((new Date(2007, 3, 9)).getTime())] = 'Easter Monday';
-				bankHolidays['d' + ((new Date(2007, 4, 7)).getTime())] = 'Early May Bank Holiday';
-				bankHolidays['d' + ((new Date(2007, 4, 28)).getTime())] = 'Spring Bnk Holiday';
-				bankHolidays['d' + ((new Date(2007, 7, 27)).getTime())] = 'Summer Bank Holiday';
-				bankHolidays['d' + ((new Date(2007, 11, 25)).getTime())] = 'Christmas Day';
-				bankHolidays['d' + ((new Date(2007, 11, 26)).getTime())] = 'Boxing Day';
+				bankHolidays[(new Date(2007, 0, 1)).asString()] = 'New Year\'s day';
+				bankHolidays[(new Date(2007, 3, 6)).asString()] = 'Good friday';
+				bankHolidays[(new Date(2007, 3, 9)).asString()] = 'Easter Monday';
+				bankHolidays[(new Date(2007, 4, 7)).asString()] = 'Early May Bank Holiday';
+				bankHolidays[(new Date(2007, 4, 28)).asString()] = 'Spring Bnk Holiday';
+				bankHolidays[(new Date(2007, 7, 27)).asString()] = 'Summer Bank Holiday';
+				bankHolidays[(new Date(2007, 11, 25)).asString()] = 'Christmas Day';
+				bankHolidays[(new Date(2007, 11, 26)).asString()] = 'Boxing Day';
 				
 				var markBankHolidays = function($td, thisDate, month, year)
 				{
-					if (bankHolidays['d' + thisDate.getTime()]) {
-						var bankHolidayName = bankHolidays['d' + thisDate.getTime()];
+					var bankHolidayName = bankHolidays[thisDate.asString()];
+					if (bankHolidayName) {
 						$td.bind(
 							'click',
 							function()
