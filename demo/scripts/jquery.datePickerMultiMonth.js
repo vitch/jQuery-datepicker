@@ -155,6 +155,7 @@
 							{
 								displayedMonth = newMonth;
 								displayedYear = newYear;
+								$dpmm.trigger('dpMonthChanged', [newMonth, newYear])
 							}
 						).bind(
 							'dpClosed',
