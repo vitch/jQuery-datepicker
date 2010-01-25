@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+		<title>jQuery datePicker custom multi month example 7</title>
+
+        <!-- jQuery -->
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+		<!--script type="text/javascript" src="scripts/jquery-1.3.2.min.js"></script-->
+        
+        <!-- required plugins -->
+		<script type="text/javascript" src="scripts/date.js"></script>
+		<!--[if IE]><script type="text/javascript" src="scripts/jquery.bgiframe.min.js"></script><![endif]-->
+        
+        <!-- jquery.datePicker.js -->
+		<script type="text/javascript" src="scripts/jquery.datePicker.js"></script>
+		<script type="text/javascript" src="scripts/jquery.datePickerMultiMonth.js"></script>
+        
+        <!-- datePicker required styles -->
+		<link rel="stylesheet" type="text/css" media="screen" href="styles/datePicker.css">
+		
+        <!-- page specific styles -->
+		<link rel="stylesheet" type="text/css" media="screen" href="styles/demo.css">
+        
+        <!-- page specific scripts -->
+		<script type="text/javascript" charset="utf-8">
+            $(function()
+            {
+				
+				Date.format = 'yyyy-mm-dd';
+				
+				var $mm = $('#multimonth');
+				var $dw = $('#disable-weekends');
+				
+				var disableWeekends = $dw.attr('checked');
+				var now = new Date();
+				var displayedMonth = now.asString('mm');
+				var displayedYear = now.asString('yyyy');
+				
+				var initDatePicker = function(){
+					$mm.empty().datePickerMultiMonth(
+						{
+							numMonths: 2,
+							inline: true,
+							month: displayedMonth,
+							year: displayedYear,
+							renderCallback: function($td, thisDate, month, year)
+							{
+								$td[disableWeekends && thisDate.isWeekend() ? 'addClass' : 'removeClass']('disabled');
+							}
+						}
+					).bind(
+						'dpMonthChanged',
+						function(event, newMonth, newYear)
+						{
+							displayedMonth = newMonth;
+							displayedYear = newYear;
+						}
+					);
+				};
+				
+				$dw.bind(
+					'click',
+					function(e)
+					{
+						disableWeekends = $dw.attr('checked');
+						initDatePicker();
+					}
+				);
+				initDatePicker();
+            });
+		</script>
+
+		<style type="text/css">
+		#multimonth {
+			border: 2px solid #000;
+			overflow: auto;
+			float: left;
+		}
+		.dp-applied {
+			float: left;
+		}
+		table.jCalendar {
+			border: none;
+		}
+		.dp-popup-inline {
+			height: 160px;
+		}
+		</style>
+		
+	</head>
+	<body>
+        <div id="container">
+            <h1>jquery.datePicker multi month plugin plugin example 7</h1>
+			<p>
+				Showing an inline calendar which is re-rendered when a checkbox is ticked.
+			</p>
+			<p><a href="index.html">&lt; date picker home</a></p>
+			
+			<form>
+				<label for="disable-weekends">Disable weekends?</label>
+				<input id="disable-weekends" name="disable-weekends" type="checkbox" /> 
+			</form>
+			
+			<div id="multimonth">This will be replaced with the multimonth select</div>
+				
+			<p style="clear: left;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec turpis nisi, hendrerit et, mattis sit amet, tincidunt vel, nisi. Nullam hendrerit. Mauris dictum dictum neque. Nullam nisi eros, consectetur in, consectetur id, venenatis vel, turpis. Morbi porta scelerisque dui. Vivamus cursus odio at leo porttitor tincidunt. Nullam dolor mi, facilisis eget, fermentum nec, faucibus sed, ante. Aliquam nec libero. Integer nulla metus, lobortis eget, mattis eu, facilisis non, magna. Pellentesque ac sem cursus tortor tempor vehicula.</p>
+			<p>Fusce neque. Donec erat magna, rhoncus in, vehicula eget, facilisis sit amet, erat. Integer leo nibh, pharetra ut, aliquam eu, condimentum et, lorem. Nulla ante. Nunc ut magna. Phasellus viverra ornare ante. Sed lacinia velit ut turpis. Suspendisse a purus. Fusce nec sapien. Vivamus vitae lorem vitae lacus congue pulvinar. In vulputate justo vitae est. Pellentesque consectetur, dui ac semper dignissim, ligula nibh gravida libero, hendrerit pretium metus nisl eu diam. Donec tellus arcu, commodo sit amet, lacinia eu, luctus quis, augue. In dui. Mauris id erat. Suspendisse libero lorem, luctus at, vestibulum et, pharetra et, tortor. Aliquam semper tempor lorem. Vestibulum libero augue, vehicula faucibus, porttitor sit amet, tempus non, ante.</p>
+        </div>
+	</body>
+</html>
