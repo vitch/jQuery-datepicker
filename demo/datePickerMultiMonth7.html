@@ -33,41 +33,26 @@
 				var $dw = $('#disable-weekends');
 				
 				var disableWeekends = $dw.attr('checked');
-				var now = new Date();
-				var displayedMonth = now.asString('mm');
-				var displayedYear = now.asString('yyyy');
 				
-				var initDatePicker = function(){
-					$mm.empty().datePickerMultiMonth(
+				$mm.datePickerMultiMonth(
+					{
+						numMonths: 2,
+						inline: true,
+						renderCallback: function($td, thisDate, month, year)
 						{
-							numMonths: 2,
-							inline: true,
-							month: displayedMonth,
-							year: displayedYear,
-							renderCallback: function($td, thisDate, month, year)
-							{
-								$td[disableWeekends && thisDate.isWeekend() ? 'addClass' : 'removeClass']('disabled');
-							}
+							$td[disableWeekends && thisDate.isWeekend() ? 'addClass' : 'removeClass']('disabled');
 						}
-					).bind(
-						'dpMonthChanged',
-						function(event, newMonth, newYear)
-						{
-							displayedMonth = newMonth;
-							displayedYear = newYear;
-						}
-					);
-				};
+					}
+				);
 				
 				$dw.bind(
 					'click',
 					function(e)
 					{
 						disableWeekends = $dw.attr('checked');
-						initDatePicker();
+						$mm.dpmmRerenderCalendar();
 					}
 				);
-				initDatePicker();
             });
 		</script>
 

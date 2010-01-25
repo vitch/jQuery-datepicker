@@ -168,6 +168,7 @@
 					}
 
 					$dpmm.data('dpBasePicker', basePicker);
+					$dpmm.data('dpPickers', pickers);
 
 					// dodgy hack so that I can set the month to the correct value and trigger a redraw of the other elements... 
 					basePicker.dpSetDisplayedMonth(1, 3000);
@@ -186,6 +187,13 @@
 		{
 			var basePicker = $(this).data('dpBasePicker');
 			return basePicker.dpSetSelected(d, v, m, e);
+		},
+		dpmmRerenderCalendar : function()
+		{
+			var pickers = $(this).data('dpPickers');
+			for (var i=0; i<pickers.length; i++) {
+				pickers[i].dpRerenderCalendar();
+			}
 		}
 	});
 	

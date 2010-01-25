@@ -501,11 +501,23 @@
  *				$(this).dpClose();
  *			}
  *		);
- * @desc Creates a date picker and makes it appear when the relevant element is focused and disappear when it is blurred.
  **/
 		dpClose : function()
 		{
 			return _w.call(this, '_closeCalendar', false, this[0]);
+		},
+/**
+ * Rerenders the date picker's current month (for use with inline calendars and renderCallbacks).
+ *
+ * @type jQuery
+ * @name dpRerenderCalendar
+ * @cat plugins/datePicker
+ * @author Kelvin Luck (http://www.kelvinluck.com/)
+ *
+ **/
+		dpRerenderCalendar : function()
+		{
+			return _w.call(this, '_rerenderCalendar');
 		},
 		// private function called on unload to clean up any expandos etc and prevent memory links...
 		_dpDestroy : function()
