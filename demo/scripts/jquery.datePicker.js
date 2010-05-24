@@ -746,7 +746,7 @@
 			getSelected : function()
 			{
 				var r = [];
-				for(s in this.selectedDates) {
+				for(var s in this.selectedDates) {
 					if (this.selectedDates[s] == true) {
 						r.push(Date.fromString(s));
 					}
