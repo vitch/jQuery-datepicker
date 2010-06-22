@@ -193,6 +193,7 @@
  * @option Number horizontalOffset The number of pixels offset from the defined horizontalPosition of this date picker that it should pop up in. Default in 0.
  * @option (Function|Array) renderCallback A reference to a function (or an array of seperate functions) that is called as each cell is rendered and which can add classes and event listeners to the created nodes. Each callback function will receive four arguments; a jquery object wrapping the created TD, a Date object containing the date this TD represents, a number giving the currently rendered month and a number giving the currently rendered year. Default is no callback.
  * @option String hoverClass The class to attach to each cell when you hover over it (to allow you to use hover effects in IE6 which doesn't support the :hover pseudo-class on elements other than links). Default is dp-hover. Pass false if you don't want a hover class.
+ * @option String autoFocusNextInput Whether focus should be passed onto the next input in the form (true) or remain on this input (false) when a date is selected and the calendar closes
  * @type jQuery
  * @name datePicker
  * @cat plugins/datePicker
@@ -940,13 +941,26 @@
 						if (!$this.is('.disabled')) {
 							c.setSelected(d, !$this.is('.selected') || !c.selectMultiple, false, true);
 							if (c.closeOnSelect) {
+								// Focus the next input in the form…
+								if (c.settings.autoFocusNextInput) {
+									var ele = c.ele;
+									var found = false;
+									$(':input', ele.form).each(
+										function()
+										{
+											if (found) {
+												$(this).focus();
+												return false;
+											}
+											if (this == ele) {
+												found = true;
+											}
+										}
+									);
+								} else {
+									c.ele.focus();
+								}
 								c._closeCalendar();
-							}
-							// TODO: Instead of this which doesn't work in IE anyway we should find the next focusable element in the document
-							// and pass the focus onto that. That would allow the user to continue on the form as expected...
-							if (!$.browser.msie)
-							{
-								$(c.ele).trigger('focus', [$.dpConst.DP_INTERNAL_FOCUS]);
 							}
 						}
 					}
@@ -1172,7 +1186,8 @@
 		horizontalPosition	: $.dpConst.POS_LEFT,
 		verticalOffset		: 0,
 		horizontalOffset	: 0,
-		hoverClass			: 'dp-hover'
+		hoverClass			: 'dp-hover',
+		autoFocusNextInput  : false
 	};
 
 	function _getController(ele)
