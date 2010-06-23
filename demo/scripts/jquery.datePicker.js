@@ -686,7 +686,7 @@
 			},
 			setSelected : function(d, v, moveToMonth, dispatchEvents)
 			{
-				if (d < this.startDate || d > this.endDate) {
+				if (d < this.startDate || d.zeroTime() > this.endDate.zeroTime()) {
 					// Don't allow people to select dates outside range...
 					return;
 				}
