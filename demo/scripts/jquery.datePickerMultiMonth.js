@@ -100,7 +100,6 @@
 
 								for (var i=0; i<s.numMonths; i++) {
 									(function(i) {
-
 										var s = $.extend({}, dps);
 										s.inline = true;
 										s.month = displayedMonth + i;
@@ -153,6 +152,9 @@
 							'dpMonthChanged',
 							function(event, newMonth, newYear)
 							{
+								if (newMonth == displayedMonth && newYear == displayedYear) {
+									return;
+								}
 								displayedMonth = newMonth;
 								displayedYear = newYear;
 								$dpmm.trigger('dpMonthChanged', [newMonth, newYear])
