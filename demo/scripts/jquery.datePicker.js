@@ -175,8 +175,8 @@
  * @param Object s (optional) Customize your date pickers.
  * @option Number month The month to render when the date picker is opened (NOTE that months are zero based). Default is today's month.
  * @option Number year The year to render when the date picker is opened. Default is today's year.
- * @option String startDate The first date date can be selected.
- * @option String endDate The last date that can be selected.
+ * @option String|Date startDate The first date date can be selected.
+ * @option String|Date endDate The last date that can be selected.
  * @option Boolean inline Whether to create the datePicker as inline (e.g. always on the page) or as a model popup. Default is false (== modal popup)
  * @option Boolean createButton Whether to create a .dp-choose-date anchor directly after the matched element which when clicked will trigger the showing of the date picker. Default is true.
  * @option Boolean showYearNavigation Whether to display buttons which allow the user to navigate through the months a year at a time. Default is true.
@@ -314,7 +314,7 @@
 /**
  * Updates the first selectable date for any date pickers on any matched elements.
  *
- * @param String d A string representing the first selectable date (formatted according to Date.format).
+ * @param String|Date d A Date object or string representing the first selectable date (formatted according to Date.format).
  * @type jQuery
  * @name dpSetStartDate
  * @cat plugins/datePicker
@@ -331,7 +331,7 @@
 /**
  * Updates the last selectable date for any date pickers on any matched elements.
  *
- * @param String d A string representing the last selectable date (formatted according to Date.format).
+ * @param String|Date d A Date object or string representing the last selectable date (formatted according to Date.format).
  * @type jQuery
  * @name dpSetEndDate
  * @cat plugins/datePicker
@@ -368,7 +368,7 @@
 /**
  * Selects or deselects a date on any matched element's date pickers. Deselcting is only useful on date pickers where selectMultiple==true. Selecting will only work if the passed date is within the startDate and endDate boundries for a given date picker.
  *
- * @param String d A string representing the date you want to select (formatted according to Date.format).
+ * @param String|Date d A Date object or string representing the date you want to select (formatted according to Date.format).
  * @param Boolean v Whether you want to select (true) or deselect (false) this date. Optional - default = true.
  * @param Boolean m Whether you want the date picker to open up on the month of this date when it is next opened. Optional - default = true.
  * @param Boolean e Whether you want the date picker to dispatch events related to this change of selection. Optional - default = true.
@@ -599,7 +599,11 @@
 			setStartDate : function(d)
 			{
 				if (d) {
-					this.startDate = Date.fromString(d);
+					if (d instanceof Date) {
+						this.startDate = d;
+					} else {
+						this.startDate = Date.fromString(d);
+					}
 				}
 				if (!this.startDate) {
 					this.startDate = (new Date()).zeroTime();
@@ -609,7 +613,11 @@
 			setEndDate : function(d)
 			{
 				if (d) {
-					this.endDate = Date.fromString(d);
+					if (d instanceof Date) {
+						this.endDate = d;
+					} else {
+						this.endDate = Date.fromString(d);
+					}
 				}
 				if (!this.endDate) {
 					this.endDate = (new Date('12/31/2999')); // using the JS Date.parse function which expects mm/dd/yyyy
