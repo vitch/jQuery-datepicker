@@ -52,13 +52,14 @@
 													'dateSelected',
 													function(event, date, $td, status)
 													{
-														if (first)	{
-															$dpmm.trigger('dateSelected', [date, $td, status]);
-														} else {
+														if (!first)	{
 															pickers[i-1].dpSetSelected(date.asString(), status, false);
 														}
 														if (!last)	{
 															pickers[i+1].dpSetSelected(date.asString(), status, false);
+														}
+														if (first) {
+															$dpmm.trigger('dateSelected', [date, $td, status]);
 														}
 														return false;
 													}
@@ -187,8 +188,12 @@
 		},
 		dpmmSetSelected : function(d, v, m, e)
 		{
-			var basePicker = $(this).data('dpBasePicker');
-			return basePicker.dpSetSelected(d, v, m, e);
+			var pickers = $(this).data('dpPickers');
+			var r = pickers[0].dpSetSelected(d, v, m, e);
+			for (var i=1; i<pickers.length; i++) {
+				pickers[i].dpSetSelected(d, v, m, false);
+			}
+			return r;
 		},
 		dpmmRerenderCalendar : function()
 		{
