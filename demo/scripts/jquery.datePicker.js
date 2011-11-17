@@ -219,7 +219,7 @@
 					var alreadyExists = true;
 					
 					if (!this._dpId) {
-						this._dpId = $.event.guid++;
+						this._dpId = $.guid++;
 						$.event._dpCache[this._dpId] = new DatePicker(this);
 						alreadyExists = false;
 					}
