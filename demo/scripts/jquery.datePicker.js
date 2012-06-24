@@ -966,7 +966,9 @@
 										}
 									);
 								} else {
-									c.ele.focus();
+									try {
+										c.ele.focus();
+									} catch (e) {}
 								}
 								c._closeCalendar();
 							}
