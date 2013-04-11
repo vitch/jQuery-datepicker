@@ -1,10 +1,10 @@
 
-
 table.jCalendar {
 	border: 1px solid #383838;
 	background: #aaa;
-    border-collapse: separate;
-    border-spacing: 0;
+	border-collapse: separate;
+	border-spacing: 0;
+	width: 100%;
 }
 table.jCalendar th {
 	background-color: #f5f5f5;
@@ -14,14 +14,14 @@ table.jCalendar th {
 	background-image: -o-linear-gradient(#f5f5f5, #ececec);
 	background-image: linear-gradient(#f5f5f5, #ececec);
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff5f5f5', endColorstr='#ffececec', GradientType=0);
-    border-color: #BBBBBB;
-    border-style: none none solid none;
-    border-width: medium medium 1px medium;
-    color: #666666;
-    font-weight: normal;
-    padding: 3px 5px;
+	border-color: #BBBBBB;
+	border-style: none none solid none;
+	border-width: medium medium 1px medium;
+	color: #666666;
+	font-weight: normal;
+	padding: 3px 5px;
 	position: relative; /** bug fix to display the table borders in IE8/9 @link http://stackoverflow.com/a/4424820/327074 */
-    text-shadow: 0 1px 0 white;
+	text-shadow: 0 1px 0 white;
 }
 
 table.jCalendar td {
@@ -33,17 +33,17 @@ table.jCalendar td {
 	background-image: linear-gradient(#E7E7E7, #D9D9D9);
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffE7E7E7', endColorstr='#ffD9D9D9', GradientType=0);
 	border-color: #BBBBBB;
-    border-style: none none solid solid;
-    border-width: medium medium 1px 1px;
-    -webkit-box-shadow: 1px 1px 0 white inset;
-    -moz-box-shadow: 1px 1px 0 white inset;
-    box-shadow: 1px 1px 0 white inset;
-    color: #666666;
+	border-style: none none solid solid;
+	border-width: medium medium 1px 1px;
+	-webkit-box-shadow: 1px 1px 0 white inset;
+	-moz-box-shadow: 1px 1px 0 white inset;
+	box-shadow: 1px 1px 0 white inset;
+	color: #666666;
 	font-weight: bold;
-    padding: 5px;
+	padding: 5px;
 	position: relative; /** bug fix to display the table borders in IE8/9 @link http://stackoverflow.com/a/4424820/327074 */
-    text-align: center;
-    text-shadow: 0 1px 0 white;
+	text-align: center;
+	text-shadow: 0 1px 0 white;
 }
 table.jCalendar td.other-month {
 	background-color: #f5f5f5;
@@ -53,7 +53,7 @@ table.jCalendar td.other-month {
 	background-image: -o-linear-gradient(#f5f5f5, #ececec);
 	background-image: linear-gradient(#f5f5f5, #ececec);
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff5f5f5', endColorstr='#ffececec', GradientType=0);
-    color: #B0B0B0;
+	color: #B0B0B0;
 }
 table.jCalendar td.today {
 	text-decoration: underline;
@@ -66,17 +66,17 @@ table.jCalendar td.selected {
 	background-image: -o-linear-gradient(#66B1C4, #58A1B2);
 	background-image: linear-gradient(#66B1C4, #58A1B2);
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff66B1C4', endColorstr='#ff58A1B2', GradientType=0);
-    border-color: #54838B;
-    -webkit-box-shadow: -1px 1px 10px rgba(0, 0, 0, 0.2) inset;
-    -moz-box-shadow: -1px 1px 10px rgba(0, 0, 0, 0.2) inset;
-    box-shadow: -1px 1px 10px rgba(0, 0, 0, 0.2) inset;
-    color: #FFFFFF;
-    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.7);
+	border-color: #54838B;
+	-webkit-box-shadow: -1px 1px 10px rgba(0, 0, 0, 0.2) inset;
+	-moz-box-shadow: -1px 1px 10px rgba(0, 0, 0, 0.2) inset;
+	box-shadow: -1px 1px 10px rgba(0, 0, 0, 0.2) inset;
+	color: #FFFFFF;
+	text-shadow: 0 1px 0 rgba(0, 0, 0, 0.7);
 }
 table.jCalendar td.selected.dp-hover, table.jCalendar td.selected:hover
 {
 	background: #f33;
-    color: #FFFFFF;
+	color: #FFFFFF;
 }
 table.jCalendar td.dp-hover,
 table.jCalendar td:hover,
@@ -94,12 +94,12 @@ table.jCalendar tr.selectedWeek td {
 	background-image: -o-linear-gradient(#66B1C4, #58A1B2);
 	background-image: linear-gradient(#66B1C4, #58A1B2);
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff66B1C4', endColorstr='#ff58A1B2', GradientType=0);
-    border-color: #54838B;
-    -webkit-box-shadow: -1px 1px 10px rgba(0, 0, 0, 0.2) inset;
-    -moz-box-shadow: -1px 1px 10px rgba(0, 0, 0, 0.2) inset;
-    box-shadow: -1px 1px 10px rgba(0, 0, 0, 0.2) inset;
-    color: #FFFFFF;
-    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.7);
+	border-color: #54838B;
+	-webkit-box-shadow: -1px 1px 10px rgba(0, 0, 0, 0.2) inset;
+	-moz-box-shadow: -1px 1px 10px rgba(0, 0, 0, 0.2) inset;
+	box-shadow: -1px 1px 10px rgba(0, 0, 0, 0.2) inset;
+	color: #FFFFFF;
+	text-shadow: 0 1px 0 rgba(0, 0, 0, 0.7);
 }
 table.jCalendar td.disabled, table.jCalendar td.disabled:hover, table.jCalendar td.disabled.dp-hover {
 	background: #fefefe;
@@ -141,17 +141,19 @@ div.dp-popup h2 {
 	background-image: -o-linear-gradient(#3A3A3A, #373737);
 	background-image: linear-gradient(#3A3A3A, #373737);
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff3A3A3A', endColorstr='#ff373737', GradientType=0);
-    border: 1px solid #393939;
-    -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.3) inset, 0 1px 1px rgba(0, 0, 0, 0.3);
-    -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.3) inset, 0 1px 1px rgba(0, 0, 0, 0.3);
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.3) inset, 0 1px 1px rgba(0, 0, 0, 0.3);
-    color: #E0E0E0;
-    font-size: 11px;
-    font-weight: bold;
-    height: 20px;
-    line-height: 20px;
-    padding: 5px;
-    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.9);
+	border: 1px solid #393939;
+	-webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.3) inset, 0 1px 1px rgba(0, 0, 0, 0.3);
+	-moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.3) inset, 0 1px 1px rgba(0, 0, 0, 0.3);
+	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.3) inset, 0 1px 1px rgba(0, 0, 0, 0.3);
+	color: #E0E0E0;
+	font-size: 11px;
+	font-weight: bold;
+	height: 20px;
+	line-height: 20px;
+	margin: 0;
+	padding: 5px;
+	text-align: center;
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.9);
 }
 a#dp-close {
 	font-size: 11px;
@@ -163,12 +165,12 @@ a#dp-close:hover {
 	text-decoration: underline;
 }
 div.dp-popup a {
-    color: #E0E0E0;
-    font-size: 11px;
-    height: 20px;
-    line-height: 20px;
-    padding: 5px 2px 0;
-    text-decoration: none;
+	color: #E0E0E0;
+	font-size: 11px;
+	height: 20px;
+	line-height: 20px;
+	padding: 5px 2px 0;
+	text-decoration: none;
 }
 div.dp-popup div.dp-nav-prev {
 	position: absolute;
