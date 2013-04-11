@@ -69,7 +69,7 @@
 			var calendarTable = $(dc('table'))
 									.attr(
 										{
-											'cellspacing':2
+											'cellspacing':0
 										}
 									)
 									.addClass('jCalendar')
