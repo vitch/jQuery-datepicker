@@ -389,6 +389,22 @@
 			return _w.call(this, 'setSelected', Date.fromString(d), v, m, e);
 		},
 /**
+ * Deselects all dates on any matched element's date pickers. Very useful on date pickers where selectMultiple==true.
+ *
+ * @type jQuery
+ * @name dpClearSelected
+ * @cat plugins/datePicker
+ * @author Kelvin Luck (http://www.kelvinluck.com/)
+ *
+ * @example $('.date-picker').datePicker();
+ * $('.date-picker').dpClearSelected();
+ * @desc Creates a date picker associated with all elements with a class of "date-picker" then clears all selected elements. Useful when calendar is inline, selectMultiple==true, and a button is created to clear all selected elements.
+ **/
+        dpClearSelected : function()
+        {
+           return _w.call(this, 'clearSelected');
+        },
+/**
  * Sets the month that will be displayed when the date picker is next opened. If the passed month is before startDate then the month containing startDate will be displayed instead. If the passed month is after endDate then the month containing the endDate will be displayed instead.
  *
  * @param Number m The month you want the date picker to display. Optional - defaults to the currently displayed month.
